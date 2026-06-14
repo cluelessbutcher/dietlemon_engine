@@ -1,6 +1,7 @@
 #include "dmemory.h"
 
 #include "core/logger.h"
+#include "core/dstring.h"
 
 #include "platform/platform.h"
 
