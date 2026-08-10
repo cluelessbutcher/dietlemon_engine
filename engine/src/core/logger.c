@@ -17,7 +17,7 @@ void shutdown_logging() {
 }
 
 void log_output(log_level level, const char* message, ...) {
-    const char* level_strings[6] = {"[FATAL]: ", "[ERROR]: ", "[WARN]: ", "[INFO]: ", "[DEBUG}: ", "[TRACE]: "};
+    const char* level_strings[6] = {"[FATAL]: ", "[ERROR]: ", "[WARN]: ", "[INFO]: ", "[DEBUG]: ", "[TRACE]: "};
 
     bool is_error = level < LOG_LEVEL_WARN;
     
