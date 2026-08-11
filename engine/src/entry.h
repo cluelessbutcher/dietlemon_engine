@@ -2,6 +2,8 @@
 
 #include "core/application.h"
 #include "core/logger.h"
+#include "core/dmemory.h"
+
 #include "game_types.h"
 
 extern bool create_game(game* out_game);
@@ -9,6 +11,8 @@ extern bool create_game(game* out_game);
 int main(void) {
     game game_inst;
 
+    initialize_memory();
+    
     if (!create_game(&game_inst)) {
         DFATAL("Could not create game");
         return -1;
@@ -29,5 +33,7 @@ int main(void) {
         return 2;
     }
 
+    shutdown_memory();
+    
     return 0;
 }

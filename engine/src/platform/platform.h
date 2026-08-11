@@ -10,8 +10,8 @@ bool platform_startup(platform_state* plat_state, const char* application_name, 
 void platform_shutdown(platform_state* plat_state);
 bool platform_pump_messages(platform_state* plat_state);
 
-DAPI void* platform_allocate(uint64_t size, bool aligned);
-DAPI void platform_free(void* block, bool aligned);
+void* platform_allocate(uint64_t size, bool aligned);
+void platform_free(void* block, bool aligned);
 
 void platform_console_write(const char* message, uint8_t color);
 void platform_console_write_error(const char* message, uint8_t color);
