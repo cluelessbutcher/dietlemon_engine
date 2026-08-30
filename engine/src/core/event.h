@@ -11,7 +11,7 @@ typedef struct event_context {
         uint32_t u32[4];
         float f32[4];
         int16_t i16[8];
-        uint16_t i16[8];
+        uint16_t u16[8];
         int8_t i8[16];
         uint8_t u8[16];
         char c[16];
@@ -20,7 +20,7 @@ typedef struct event_context {
 
 typedef bool (*PFN_on_event)(uint16_t code, void* sender, void* listener_inst, event_context data);
 
-bool event_intialize();
+bool event_initialize();
 void event_shutdown();
 
 DAPI bool event_register(uint16_t code, void* listener, PFN_on_event on_event);
