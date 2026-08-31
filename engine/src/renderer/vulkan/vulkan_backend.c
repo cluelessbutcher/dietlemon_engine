@@ -2,6 +2,7 @@
 
 #include "vulkan_types.inl"
 #include "vulkan_platform.h"
+#include "vulkan_device.h"
 
 #include "core/logger.h"
 #include "containers/darray.h"
@@ -102,6 +103,18 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
     VK_CHECK(func(context.instance, &debug_create_info, context.allocator, &context.debug_messenger));
     DDEBUG("Vulkan debugger created");
 #endif
+
+    DDEBUG("Creating Vulakn surface...");
+    if (!platform_create_vulkan_surface(plat_state, &context)) {
+        DERROR("Failed to create platform surface");;
+        return false;
+    }
+    DDEBUG("Vulkan surface create");
+
+    if (!vulkan_device_create(&context)) {
+        DERROR("Failed to create device");
+        return false;
+    }
     
     VkResult result = vkCreateInstance(&create_info, context.allocator, &context.instance);
     if(result != VK_SUCCESS) {
