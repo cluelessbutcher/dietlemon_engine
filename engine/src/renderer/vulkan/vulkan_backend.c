@@ -3,6 +3,8 @@
 #include "vulkan_types.inl"
 #include "vulkan_platform.h"
 #include "vulkan_device.h"
+#include "vulkan_swapchain.h"
+#include "vulkan_renderpass.h"
 
 #include "core/logger.h"
 #include "containers/darray.h"
@@ -18,9 +20,11 @@ VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_callback(
     const VkDebugUtilsMessengerCallbackDataEXT* callback_data,
     void* user_data);
 
-
+int32_t find_memory_index(uint32_t type_filter, uint32_t property_flags);
 
 bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* application_name, struct platform_state* plat_state) {
+    context.find_memory_index = find_memory_index;
+    
     context.allocator = 0;
 
     VkApplicationInfo app_info = {VK_STRUCTURE_TYPE_APPLICATION_INFO};
@@ -115,6 +119,9 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
         DERROR("Failed to create device");
         return false;
     }
+
+    vulkan_swapchain_create(&context, context.framebuffer_width, context.framebuffer_height, &context.swapchain);
+    vulkan_renderpass_create(&context, &context.main_renderpass, 0, 0, context.framebuffer_width, context.framebuffer_height, 0.0f, 0.0f, 0.2f, 0.1f, 1.0f, 0);
     
     VkResult result = vkCreateInstance(&create_info, context.allocator, &context.instance);
     if(result != VK_SUCCESS) {
@@ -127,6 +134,16 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
 }
 
 void vulkan_renderer_backend_shutdown(renderer_backend* backend) {
+    vulkan_renderpass_destroy(&context, &context.main_renderpass);
+    vulkan_swapchain_destroy(&context, &context.swapchain);
+    DDEBUG("Destroying vulkan device...");
+    vulkan_device_destroy(&context);
+    DDEBUG("Destroying vulkan surface...");
+    if (context.surface) {
+        vkDestroySurfaceKHR(context.instance, context.surface, context.allocator);
+        context.surface = 0;
+    }
+    
     DDEBUG("Destroying vulkan debugger...");
     if (context.debug_messenger) {
         PFN_vkDestroyDebugUtilsMessengerEXT func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(context.instance, "vkDestroyDebugUtilsMessengerEXT");
@@ -166,4 +183,18 @@ VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_callback(
             break;
     }
     return VK_FALSE;
+}
+
+int32_t find_memory_index(uint32_t type_filter, uint32_t property_flags) {
+    VkPhysicalDeviceMemoryProperties memory_properties;
+    vkGetPhysicalDeviceMemoryProperties(context.device.physical_device, &memory_properties);
+
+    for (uint32_t i = 0; i < memory_properties.memoryTypeCount; ++i) {
+        if (type_filter & (1 << i) && (memory_properties.memoryTypes[i].propertyFlags & property_flags) == property_flags) {
+            return i;
+        }
+    }
+
+    DWARN("Unable to find suitable memory type");
+    return -1;
 }

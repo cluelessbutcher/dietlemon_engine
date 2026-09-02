@@ -22,12 +22,12 @@ void vulkan_swapchain_destroy(vulkan_context* context, vulkan_swapchain* swapcha
 }
 
 bool vulkan_swapchain_acquire_next_image_index(vulkan_context* context, vulkan_swapchain* swapchain, uint64_t timeout_ns, VkSemaphore image_available_semaphore, VkFence fence, uint32_t* out_image_index) {
-    VkResult result = vkAcquireNextImageKHR(context->device.logical_device, swapchain->handlle, timeout_ns, image_available_semaphore, fence, out_image_index);
+    VkResult result = vkAcquireNextImageKHR(context->device.logical_device, swapchain->handle, timeout_ns, image_available_semaphore, fence, out_image_index);
     if (result == VK_ERROR_OUT_OF_DATE_KHR) {
         vulkan_swapchain_recreate(context, context->framebuffer_width, context->framebuffer_height, swapchain);
         return false;
     } else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR) {
-        DAFATL("Failed to Acquire swapchain image");
+        DFATAL("Failed to Acquire swapchain image");
         return false;
     }
 
@@ -35,7 +35,7 @@ bool vulkan_swapchain_acquire_next_image_index(vulkan_context* context, vulkan_s
 }
 
 void vulkan_swapchain_present(vulkan_context* context, vulkan_swapchain* swapchain, VkQueue graphics_queue, VkQueue present_queue, VkSemaphore render_complete_semaphore, uint32_t present_image_index) {
-    VkPresentInfoKHR present_info = {VK_STRUCTURE_YPE_PRESENT_INFO_KHR};
+    VkPresentInfoKHR present_info = {VK_STRUCTURE_TYPE_PRESENT_INFO_KHR};
     present_info.waitSemaphoreCount = 1;
     present_info.pWaitSemaphores = &render_complete_semaphore;
     present_info.swapchainCount = 1;
@@ -43,9 +43,9 @@ void vulkan_swapchain_present(vulkan_context* context, vulkan_swapchain* swapcha
     present_info.pImageIndices = &present_image_index;
     present_info.pResults = 0;
 
-    VkResult result = VkQueuePresentKHR(present_queue, &present_info);
+    VkResult result = vkQueuePresentKHR(present_queue, &present_info);
     if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
-        vulkan_swapchain_recreate(context, context->framebuffer_width,, context->framebuffer_height, swapchain);
+        vulkan_swapchain_recreate(context, context->framebuffer_width, context->framebuffer_height, swapchain);
     } else if (result != VK_SUCCESS) {
         DFATAL("Failed to present swapchain image");
     }
@@ -101,9 +101,9 @@ void create(vulkan_context* context, uint32_t width, uint32_t height, vulkan_swa
     swapchain_create_info.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
     if (context->device.graphics_queue_index != context->device.present_queue_index) {
-        uint32 queueFamilyIndices[] = {
-            (uint32)context->device.graphics_queue_index,
-            (uint32)context->device.present_queue_index};
+        uint32_t queueFamilyIndices[] = {
+            (uint32_t)context->device.graphics_queue_index,
+            (uint32_t)context->device.present_queue_index};
         swapchain_create_info.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
         swapchain_create_info.queueFamilyIndexCount = 2;
         swapchain_create_info.pQueueFamilyIndices = queueFamilyIndices;
@@ -126,10 +126,10 @@ void create(vulkan_context* context, uint32_t width, uint32_t height, vulkan_swa
     swapchain->image_count = 0;
     VK_CHECK(vkGetSwapchainImagesKHR(context->device.logical_device, swapchain->handle, &swapchain->image_count, 0));
     if (!swapchain->images) {
-        swapchain->images = (VkImage*)kallocate(sizeof(VkImage) * swapchain->image_count, MEMORY_TAG_RENDERER);
+        swapchain->images = (VkImage*)dallocate(sizeof(VkImage) * swapchain->image_count, MEMORY_TAG_RENDERER);
     }
     if (!swapchain->views) {
-        swapchain->views = (VkImageView*)kallocate(sizeof(VkImageView) * swapchain->image_count, MEMORY_TAG_RENDERER);
+        swapchain->views = (VkImageView*)dallocate(sizeof(VkImageView) * swapchain->image_count, MEMORY_TAG_RENDERER);
     }
     VK_CHECK(vkGetSwapchainImagesKHR(context->device.logical_device, swapchain->handle, &swapchain->image_count, swapchain->images));
 
