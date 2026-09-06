@@ -14,3 +14,4 @@ typedef struct application_config {
 
 DAPI bool application_create(struct game* game_inst);
 DAPI bool application_run();
+void application_get_framebuffer_size(uint32_t* width, uint32_t* height);
