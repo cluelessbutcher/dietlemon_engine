@@ -9,7 +9,7 @@ void* _darray_create(uint64_t length, uint64_t stride) {
     uint64_t header_size = DARRAY_FIELD_LENGTH * sizeof(uint64_t);
     uint64_t array_size = length * stride;
 
-    uint64_t* new_array = dallocate(header_size + array_size, MEMORY_TAG_ARRAY);
+    uint64_t* new_array = dallocate(header_size + array_size, MEMORY_TAG_DARRAY);
     memset(new_array, 0, header_size + array_size);
 
     new_array[DARRAY_CAPACITY] = length;
@@ -76,7 +76,7 @@ void _darray_pop(void* array, void* dest) {
     uint64_t stride = darray_stride(array);
 
     uint64_t addr = (uint64_t)array;
-    addr += ((length + 1) * stride);
+    addr += ((length - 1) * stride);
 
     memcpy(dest, (void*)addr, stride);
 
@@ -96,7 +96,9 @@ void* _darray_pop_at(void* array, uint64_t index, void* dest) {
     memcpy(dest, (void*)(addr + (index * stride)), stride);
 
     if (index != length) {
-        memcpy((void*)(addr + (index * stride)), (void*)(addr + ((index - 1) * stride)), stride * (length - index));
+        memcpy((void*)(addr + (index * stride)),
+               (void*)(addr + ((index + 1) * stride)),
+               stride * (length - index - 1));
     }
 
     _darray_field_set(array, DARRAY_LENGTH, length - 1);
@@ -118,7 +120,11 @@ void* _darray_insert_at(void* array, uint64_t index, void* value_ptr) {
     
     uint64_t addr = (uint64_t)array;
     if (index != length - 1) {
-        memcpy((void*)(addr + (index * stride)), (void*)(addr + ((index - 1) * stride)), stride * (length - index));
+        if (index < length) {
+            memcpy((void*)(addr + ((index + 1) * stride)),
+                   (void*)(addr + (index * stride)),
+                   stride * (length - index));
+        }
     }
 
     memcpy((void*)(addr + (index * stride)), value_ptr, stride);
