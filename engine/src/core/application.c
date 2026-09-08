@@ -28,6 +28,7 @@ static application_state app_state;
 
 bool application_on_event(uint16_t code, void* sender, void* listener_inst, event_context context);
 bool application_on_key(uint16_t code, void* sender, void* listener_inst, event_context context);
+bool application_on_resized(uint16_t code, void* sender, void* listener_inst, event_context context);
 
 bool application_create(game* game_inst) {
     if (initialized) {
@@ -58,7 +59,8 @@ bool application_create(game* game_inst) {
     event_register(EVENT_CODE_APPLICATION_QUIT, 0, application_on_event);
     event_register(EVENT_CODE_KEY_PRESSED, 0, application_on_key);
     event_register(EVENT_CODE_KEY_RELEASED, 0, application_on_key);
-    
+    event_register(EVENT_CODE_RESIZED, 0, application_on_resized);
+
     if (!platform_startup(&app_state.platform,
                           game_inst->app_config.name,
                           game_inst->app_config.start_pos_x,
@@ -191,6 +193,35 @@ bool application_on_key(uint16_t code, void* sender, void* listener_inst, event_
             DDEBUG("Explicit - B released");
         } else {
             DDEBUG("'%c' key released in window", key_code);
+        }
+    }
+
+    return false;
+}
+
+bool application_on_resized(uint16_t code, void* sender, void* listener_inst, event_context context) {
+    if (code == EVENT_CODE_RESIZED) {
+        uint16_t width = context.data.u16[0];
+        uint16_t height = context.data.u16[1];
+
+        if (width != app_state.width || height != app_state.height) {
+            app_state.width = width;
+            app_state.height = height;
+
+            DDEBUG("Window resize: %i, %i", width, height);
+
+            if (width == 0 || height == 0) {
+                DINFO("Window minimized, suspending application");
+                app_state.is_suspended = true;
+                return true;
+            } else {
+                if (app_state.is_suspended) {
+                    DINFO("Window restored, resuming application");
+                    app_state.is_suspended = false;
+                }
+                app_state.game_inst->on_resize(app_state.game_inst, width, height);
+                renderer_on_resize(width, height);
+            }
         }
     }
 

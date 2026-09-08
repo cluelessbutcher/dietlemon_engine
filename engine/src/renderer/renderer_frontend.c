@@ -38,6 +38,14 @@ bool renderer_end_frame(float delta_time) {
     return result;
 }
 
+void renderer_on_resize(uint16_t width, uint16_t height) {
+    if (backend) {
+        backend->resized(backend, width, height);
+    } else {
+        DWARN("renderer backend does not exist to accept resize: %i, %i", width, height);
+    }
+}
+
 bool renderer_draw_frame(render_packet* packet) {
     if (renderer_begin_frame(packet->delta_time)) {
         bool result = renderer_end_frame(packet->delta_time);

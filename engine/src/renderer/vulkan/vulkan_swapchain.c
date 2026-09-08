@@ -1,4 +1,4 @@
-#include "vulkan_swapchain.h"
+    #include "vulkan_swapchain.h"
 
 #include "core/logger.h"
 #include "core/dmemory.h"
@@ -55,6 +55,8 @@ void vulkan_swapchain_present(vulkan_context* context, vulkan_swapchain* swapcha
 
 void create(vulkan_context* context, uint32_t width, uint32_t height, vulkan_swapchain* swapchain) {
     VkExtent2D swapchain_extent = {width, height};
+    swapchain->max_frames_in_flight = 2;
+    
     bool found = false;
     for (uint32_t i = 0; i < context->device.swapchain_support.format_count; ++i) {
         VkSurfaceFormatKHR format = context->device.swapchain_support.formats[i];
@@ -171,10 +173,49 @@ void create(vulkan_context* context, uint32_t width, uint32_t height, vulkan_swa
 }
 
 void destroy(vulkan_context* context, vulkan_swapchain* swapchain) {
-    vulkan_image_destroy(context, &swapchain->depth_attachment);
-    for (uint32_t i = 0; i < swapchain->image_count; ++i) {
-        vkDestroyImageView(context->device.logical_device, swapchain->views[i], context->allocator);
+    vkDeviceWaitIdle(context->device.logical_device);
+
+    vulkan_image_destroy(
+        context,
+        &swapchain->depth_attachment);
+
+    for (uint32_t i = 0;
+         i < swapchain->image_count;
+         ++i) {
+        if (swapchain->views[i]) {
+            vkDestroyImageView(
+                context->device.logical_device,
+                swapchain->views[i],
+                context->allocator);
+
+            swapchain->views[i] = 0;
+        }
     }
 
-    vkDestroySwapchainKHR(context->device.logical_device, swapchain->handle, context->allocator);
+    vkDestroySwapchainKHR(
+        context->device.logical_device,
+        swapchain->handle,
+        context->allocator);
+
+    swapchain->handle = 0;
+
+    if (swapchain->images) {
+        dfree(
+            swapchain->images,
+            sizeof(VkImage) * swapchain->image_count,
+            MEMORY_TAG_RENDERER);
+
+        swapchain->images = 0;
+    }
+
+    if (swapchain->views) {
+        dfree(
+            swapchain->views,
+            sizeof(VkImageView) * swapchain->image_count,
+            MEMORY_TAG_RENDERER);
+
+        swapchain->views = 0;
+    }
+
+    swapchain->image_count = 0;
 }
