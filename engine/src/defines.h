@@ -27,3 +27,6 @@ STATIC_ASSERT(sizeof(double) == 8, "Expected double to be 8 bytes");
 #endif
 
 #define DCLAMP(value, min, max) (value <= min) ? min : (value >= max) ? max : value;
+
+#define DINLINE static inline
+#define NODINLINE

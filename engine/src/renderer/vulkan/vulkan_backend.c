@@ -261,13 +261,15 @@ void vulkan_renderer_backend_shutdown(renderer_backend* backend) {
         context.surface = 0;
     }
 
+#if (_DEBUG)
     DDEBUG("Destroying Vulkan debugger...");
     if (context.debug_messenger) {
         PFN_vkDestroyDebugUtilsMessengerEXT func =
             (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(context.instance, "vkDestroyDebugUtilsMessengerEXT");
         func(context.instance, context.debug_messenger, context.allocator);
     }
-
+#endif
+    
     DDEBUG("Destroying Vulkan instance...");
     vkDestroyInstance(context.instance, context.allocator);
 }
@@ -370,7 +372,6 @@ bool vulkan_renderer_backend_end_frame(renderer_backend* backend, float delta_ti
             context.images_in_flight[context.image_index],
             UINT64_MAX);
     }
-
     context.images_in_flight[context.image_index] = &context.in_flight_fences[context.current_frame];
 
     vulkan_fence_reset(&context, &context.in_flight_fences[context.current_frame]);
