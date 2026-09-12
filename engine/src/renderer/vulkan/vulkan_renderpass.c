@@ -18,7 +18,7 @@ void vulkan_renderpass_create(vulkan_context* context, vulkan_renderpass* out_re
 
     VkSubpassDescription subpass = {};
     subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-    uint32_t attachment_description_count = 2;
+    const uint32_t attachment_description_count = 2;
     VkAttachmentDescription attachment_description[attachment_description_count];
 
     VkAttachmentDescription color_attachment;

@@ -8,12 +8,34 @@
 #include <string.h>
 #include <stdarg.h>
 
-bool initialize_logging() {
+typedef struct logger_system_state {
+  bool initialized;
+} logger_system_state;
+
+static logger_system_state* state_ptr;
+
+bool initialize_logging(uint64_t* memory_requirement, void* state) {
+  *memory_requirement = sizeof(logger_system_state);
+  if (state == 0) {
     return true;
+  }
+  
+  state_ptr = state;
+  state_ptr->initialized = true;
+  
+  
+  DFATAL("a test message: %f", 3.14f);
+  DERROR("a test message: %f", 3.14f);
+  DWARN("a test message: %f", 3.14f);
+  DINFO("a test message: %f", 3.14f);
+  DDEBUG("a test message: %f", 3.14f);
+  DTRACE("a test message: %f", 3.14f);
+  
+  return true;
 }
 
-void shutdown_logging() {
-
+void shutdown_logging(void* state) {
+  state_ptr = 0;
 }
 
 void log_output(log_level level, const char* message, ...) {

@@ -95,6 +95,8 @@ void create(vulkan_context* context, uint32_t width, uint32_t height, vulkan_swa
         image_count = context->device.swapchain_support.capabilities.maxImageCount;
     }
 
+    swapchain->max_frames_in_flight = image_count - 1;
+    
     VkSwapchainCreateInfoKHR swapchain_create_info = {VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR};
     swapchain_create_info.surface = context->surface;
     swapchain_create_info.minImageCount = image_count;

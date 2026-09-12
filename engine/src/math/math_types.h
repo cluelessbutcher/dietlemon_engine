@@ -14,21 +14,19 @@ typedef union vec2_u {
     };
 } vec2;
 
-typedef struct vec3_u {
+typedef struct vec3_u {  
+  float elements[3];
+  struct {
     union {
-        float elements[3];
-        struct {
-            union {
-                float x, r, s, u;
-            };
-            union {
-                float y, g, t, v;
-            };
-            union {
-                float z, b, p, w;
-            };
-        };
+      float x, r, s, u;
     };
+    union {
+      float y, g, t, v;
+    };
+    union {
+      float z, b, p, w;
+    };
+  };
 } vec3;
 
 typedef union vec4_u {

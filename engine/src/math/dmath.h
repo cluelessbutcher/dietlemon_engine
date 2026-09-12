@@ -695,27 +695,27 @@ DINLINE vec3 mat4_down(mat4 matrix) {
 }
 
 DINLINE vec3 mat4_left(mat4 matrix) {
-    vec3 right;
-
-    right.x = -matrix.data[0];
-    right.y = -matrix.data[4];
-    right.z = -matrix.data[8];
-
-    vec3_normalize(&right);
-
-    return right;
-}
-
-DINLINE vec3 mat4_right(mat4 matrix) {
     vec3 left;
 
-    left.x = matrix.data[0];
-    left.y = matrix.data[4];
-    left.z = matrix.data[8];
+    left.x = -matrix.data[0];
+    left.y = -matrix.data[4];
+    left.z = -matrix.data[8];
 
     vec3_normalize(&left);
 
     return left;
+}
+
+DINLINE vec3 mat4_right(mat4 matrix) {
+    vec3 right;
+
+    right.x = matrix.data[0];
+    right.y = matrix.data[4];
+    right.z = matrix.data[8];
+
+    vec3_normalize(&right);
+
+    return right;
 }
 
 DINLINE quat quat_identity() {

@@ -21,8 +21,8 @@ typedef enum log_level {
     LOG_LEVEL_TRACE = 5
 } log_level;
 
-bool initialize_logging();
-void shutdown_logging();
+bool initialize_logging(uint64_t* memory_requirement, void* state);
+void shutdown_logging(void* state);
 
 DAPI void log_output(log_level level, const char* message, ...);
 
