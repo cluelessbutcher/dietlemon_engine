@@ -20,8 +20,8 @@ typedef struct event_context {
 
 typedef bool (*PFN_on_event)(uint16_t code, void* sender, void* listener_inst, event_context data);
 
-bool event_initialize();
-void event_shutdown();
+void event_system_initialize(uint64_t* memory_requirement, void* state);
+void event_system_shutdown(void* state);
 
 DAPI bool event_register(uint16_t code, void* listener, PFN_on_event on_event);
 DAPI bool event_unregister(uint16_t code, void* listener, PFN_on_event on_event);

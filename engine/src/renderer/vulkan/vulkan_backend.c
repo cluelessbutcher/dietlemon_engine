@@ -36,7 +36,7 @@ void create_command_buffers(renderer_backend* backend);
 void regenerate_framebuffers(renderer_backend* backend, vulkan_swapchain* swapchain, vulkan_renderpass* renderpass);
 bool recreate_swapchain(renderer_backend* backend);
 
-bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* application_name, struct platform_state* plat_state) {
+bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* application_name) {
     context.find_memory_index = find_memory_index;
 
     context.allocator = 0;
@@ -132,7 +132,7 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
 #endif
 
     DDEBUG("Creating Vulkan surface...");
-    if (!platform_create_vulkan_surface(plat_state, &context)) {
+    if (!platform_create_vulkan_surface(&context)) {
         DERROR("Failed to create platform surface!");
         return false;
     }

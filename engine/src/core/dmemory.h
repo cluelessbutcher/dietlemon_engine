@@ -24,8 +24,8 @@ typedef enum memory_tag {
   MEMORY_TAG_MAX_TAGS
 } memory_tag;
 
-DAPI void initialize_memory(uint64_t* memory_requirement, void* state);
-DAPI void shutdown_memory();
+DAPI void memory_system_initialize(uint64_t* memory_requirement, void* state);
+DAPI void memory_system_shutdown(void* state);
 
 DAPI void* dallocate(uint64_t size, memory_tag tag);
 DAPI void dfree(void* block, uint64_t size, memory_tag tag);

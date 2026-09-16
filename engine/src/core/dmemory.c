@@ -39,7 +39,7 @@ typedef struct memory_system_state {
 
 static memory_system_state* state_ptr;
 
-void initialize_memory(uint64_t* memory_requirement, void* state) {
+void memory_system_initialize(uint64_t* memory_requirement, void* state) {
   *memory_requirement = sizeof(memory_system_state);
   if (state == 0) {
     return;
@@ -50,7 +50,7 @@ void initialize_memory(uint64_t* memory_requirement, void* state) {
   memset(&state_ptr->stats, 0, sizeof(state_ptr->stats));
 }
 
-void shutdown_memory() {
+void memory_system_shutdown(void* state) {
   state_ptr = 0;
 }
 
@@ -76,9 +76,10 @@ void dfree(void* block, uint64_t size, memory_tag tag) {
     DWARN("dfree called with the tag 'MEMORY_TAG_UNKNOWN' re-class this allocation");
   }
 
-  state_ptr->stats.total_allocated -= size;
-  state_ptr->stats.tagged_allocations[tag] -= size;
-
+  if (state_ptr) {
+    state_ptr->stats.total_allocated -= size;
+    state_ptr->stats.tagged_allocations[tag] -= size;
+  }
   platform_free(block, false);
 }
 
