@@ -1,8 +1,7 @@
-obj/engine/src/renderer/vulkan/vulkan_backend.c.o: \
-  engine/src/renderer/vulkan/vulkan_backend.c \
-  engine/src/renderer/vulkan/vulkan_backend.h \
-  engine/src/renderer/renderer_backend.h \
-  engine/src/renderer/renderer_types.inl engine/src/defines.h \
+obj/engine/src/renderer/vulkan/vulkan_buffer.c.o: \
+  engine/src/renderer/vulkan/vulkan_buffer.c \
+  engine/src/renderer/vulkan/vulkan_buffer.h \
+  engine/src/renderer/vulkan/vulkan_types.inl engine/src/defines.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdint.h /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/features.h /usr/include/features-time64.h \
@@ -20,8 +19,8 @@ obj/engine/src/renderer/vulkan/vulkan_backend.c.o: \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdbool.h \
-  engine/src/renderer/vulkan/vulkan_types.inl engine/src/core/asserts.h \
-  /usr/include/vulkan/vulkan.h /usr/include/vulkan/vk_platform.h \
+  engine/src/core/asserts.h /usr/include/vulkan/vulkan.h \
+  /usr/include/vulkan/vk_platform.h \
   /usr/lib/llvm-21/lib/clang/21/include/stddef.h \
   /usr/lib/llvm-21/lib/clang/21/include/__stddef_header_macro.h \
   /usr/lib/llvm-21/lib/clang/21/include/__stddef_ptrdiff_t.h \
@@ -43,20 +42,10 @@ obj/engine/src/renderer/vulkan/vulkan_backend.c.o: \
   /usr/include/vk_video/vulkan_video_codec_av1std_encode.h \
   /usr/include/vk_video/vulkan_video_codec_vp9std.h \
   /usr/include/vk_video/vulkan_video_codec_vp9std_decode.h \
-  engine/src/renderer/vulkan/vulkan_platform.h \
   engine/src/renderer/vulkan/vulkan_device.h \
-  engine/src/renderer/vulkan/vulkan_swapchain.h \
-  engine/src/renderer/vulkan/vulkan_renderpass.h \
   engine/src/renderer/vulkan/vulkan_command_buffer.h \
-  engine/src/renderer/vulkan/vulkan_framebuffer.h \
-  engine/src/renderer/vulkan/vulkan_fence.h \
-  engine/src/renderer/vulkan/vulkan_utils.h \
-  engine/src/renderer/vulkan/vulkan_buffer.h engine/src/core/logger.h \
-  engine/src/core/dmemory.h engine/src/core/application.h \
-  engine/src/containers/darray.h engine/src/math/math_types.h \
-  engine/src/platform/platform.h \
-  engine/src/renderer/vulkan/shaders/vulkan_object_shader.h \
-  /usr/include/string.h \
+  engine/src/renderer/vulkan/vulkan_utils.h engine/src/core/logger.h \
+  engine/src/core/dmemory.h /usr/include/string.h \
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
   /usr/include/strings.h
