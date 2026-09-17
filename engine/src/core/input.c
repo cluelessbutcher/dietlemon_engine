@@ -49,26 +49,25 @@ void input_update(double delta_time) {
 }
 
 void input_process_key(keys key, bool pressed) {
-  if (key == KEY_LALT) {
-    DINFO("Left alt pressed");
-  } else if (key == KEY_RALT) {
-    DINFO("Right alt pressed");
-  }
-  
-  if (key == KEY_LCONTROL) {
-    DINFO("Left ctrl pressed");
-  } else if (key == KEY_RCONTROL) {
-    DINFO("Right ctrl pressed");
-  }
-  
-  if (key == KEY_LSHIFT) {
-    DINFO("Left shift pressed");
-  } else if (key == KEY_RSHIFT) {
-    DINFO("Right shift pressed");
-  }
-  
-  if (state_ptr->keyboard_current.keys[key] != pressed) {
+  if (state_ptr && state_ptr->keyboard_current.keys[key] != pressed) {
     state_ptr->keyboard_current.keys[key] = pressed;
+    if (key == KEY_LALT) {
+      DINFO("Left alt %s", pressed ? "pressed" : "released");
+    } else if (key == KEY_RALT) {
+      DINFO("Right alt %s", pressed ? "pressed" : "released");
+    }
+  
+    if (key == KEY_LCONTROL) {
+      DINFO("Left ctrl %s", pressed ? "pressed" : "released");
+    } else if (key == KEY_RCONTROL) {
+      DINFO("Right ctrl %s", pressed ? "pressed" : "released");
+    }
+  
+    if (key == KEY_LSHIFT) {
+      DINFO("Left shift %s", pressed ? "pressed" : "released");
+    } else if (key == KEY_RSHIFT) {
+      DINFO("Right shift %s", pressed ? "pressed" : "released");
+    }
     event_context context;
     context.data.u16[0] = key;
     event_fire(pressed ? EVENT_CODE_KEY_PRESSED : EVENT_CODE_KEY_RELEASED, 0, context);

@@ -18,6 +18,8 @@
 
 #include "platform/platform.h"
 
+#include "shaders/vulkan_object_shader.h"
+
 #include <string.h>
 
 static vulkan_context context;
@@ -196,6 +198,11 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
         context.images_in_flight[i] = 0;
     }
 
+    if (!vulkan_object_shader_create(&context, &context.object_shader)) {
+      DERROR("Error loading built-in basic_lighting shader");
+      return false;
+    }
+    
     DINFO("Vulkan renderer initialized successfully.");
     return true;
 }
