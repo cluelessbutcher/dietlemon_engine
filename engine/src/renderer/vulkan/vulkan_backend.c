@@ -168,6 +168,8 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
     context.queue_complete_semaphores = darray_reserve(VkSemaphore, context.swapchain.image_count);
     context.in_flight_fences = darray_reserve(vulkan_fence, context.swapchain.max_frames_in_flight);
 
+    vulkan_object_shader_destroy(&context, &context.object_shader);
+    
     for (uint8_t i = 0; i < context.swapchain.max_frames_in_flight; ++i) {
         VkSemaphoreCreateInfo semaphore_create_info = {VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO};
 

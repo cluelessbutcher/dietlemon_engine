@@ -4,15 +4,29 @@
 
 #include "platform/platform.h"
 
+#include "platform/filesystem.h"
+#include "core/dstring.h"
+#include "core/dmemory.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
 
 typedef struct logger_system_state {
-  bool initialized;
+  file_handle log_file_handle;
 } logger_system_state;
 
 static logger_system_state* state_ptr;
+
+void append_to_log_file(const char* message) {
+  if (state_ptr && state_ptr->log_file_handle.is_valid) {
+    uint64_t length = strlen(message);
+    uint64_t written = 0;
+    if (!filesystem_write(&state_ptr->log_file_handle, length, message, &written)) {
+      platform_console_write_error("Error writing to console log", LOG_LEVEL_ERROR);
+    }
+  }
+}
 
 bool initialize_logging(uint64_t* memory_requirement, void* state) {
   *memory_requirement = sizeof(logger_system_state);
@@ -21,8 +35,11 @@ bool initialize_logging(uint64_t* memory_requirement, void* state) {
   }
   
   state_ptr = state;
-  state_ptr->initialized = true;
   
+  if (!filesystem_open("console.log", FILE_MODE_WRITE, false, &state_ptr->log_file_handle)) {
+    platform_console_write_error("ERROR: Unable to open console.log for writing", LOG_LEVEL_ERROR);
+    return false;
+  }
   
   DFATAL("a test message: %f", 3.14f);
   DERROR("a test message: %f", 3.14f);
@@ -43,24 +60,24 @@ void log_output(log_level level, const char* message, ...) {
 
     bool is_error = level < LOG_LEVEL_WARN;
     
-    const int32_t msg_length = 32000;
-    char out_message[msg_length];
+    char out_message[32000];
     memset(out_message, 0, sizeof(out_message));
 
     __builtin_va_list arg_ptr;
     va_start(arg_ptr, message);
 
-    vsnprintf(out_message, msg_length, message, arg_ptr);
+    string_format_v(out_message, message, arg_ptr);
     va_end(arg_ptr);
 
-    char out_message2[msg_length];
-    sprintf(out_message2, "%s%s\n", level_strings[level], out_message);
-
+    string_format(out_message, "%s%s\n", level_strings[level], out_message);
+    
     if (is_error) {
-        platform_console_write_error(out_message2, level);
+        platform_console_write_error(out_message, level);
     } else {
-        platform_console_write(out_message2, level);
+        platform_console_write(out_message, level);
     }
+    
+    append_to_log_file(out_message);
 }
 
 void report_assertion_failure(const char* expression, const char* message, const char* file, int32_t line) {

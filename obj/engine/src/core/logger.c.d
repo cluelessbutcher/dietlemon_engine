@@ -18,7 +18,9 @@ obj/engine/src/core/logger.c.o: engine/src/core/logger.c \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdbool.h \
   engine/src/core/asserts.h engine/src/platform/platform.h \
-  /usr/include/stdio.h /usr/lib/llvm-21/lib/clang/21/include/stddef.h \
+  engine/src/platform/filesystem.h engine/src/core/dstring.h \
+  engine/src/core/dmemory.h /usr/include/stdio.h \
+  /usr/lib/llvm-21/lib/clang/21/include/stddef.h \
   /usr/lib/llvm-21/lib/clang/21/include/__stddef_size_t.h \
   /usr/lib/llvm-21/lib/clang/21/include/__stddef_null.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdarg.h \

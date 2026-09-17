@@ -1,6 +1,6 @@
-obj/engine/src/renderer/vulkan/shaders/vulkan_object_shader.c.o: \
-  engine/src/renderer/vulkan/shaders/vulkan_object_shader.c \
-  engine/src/renderer/vulkan/shaders/vulkan_object_shader.h \
+obj/engine/src/renderer/vulkan/vulkan_pipeline.c.o: \
+  engine/src/renderer/vulkan/vulkan_pipeline.c \
+  engine/src/renderer/vulkan/vulkan_pipeline.h \
   engine/src/renderer/vulkan/vulkan_types.inl engine/src/defines.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdint.h /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -42,10 +42,9 @@ obj/engine/src/renderer/vulkan/shaders/vulkan_object_shader.c.o: \
   /usr/include/vk_video/vulkan_video_codec_av1std_encode.h \
   /usr/include/vk_video/vulkan_video_codec_vp9std.h \
   /usr/include/vk_video/vulkan_video_codec_vp9std_decode.h \
-  engine/src/renderer/renderer_types.inl engine/src/core/logger.h \
-  engine/src/core/dmemory.h engine/src/math/math_types.h \
-  engine/src/renderer/vulkan/vulkan_shader_utils.h \
-  engine/src/renderer/vulkan/vulkan_pipeline.h /usr/include/string.h \
+  engine/src/renderer/vulkan/vulkan_utils.h engine/src/core/dmemory.h \
+  engine/src/core/logger.h engine/src/math/math_types.h \
+  /usr/include/string.h \
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
   /usr/include/strings.h

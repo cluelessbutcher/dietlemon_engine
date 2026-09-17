@@ -1,0 +1,150 @@
+[FATAL]: a test message: 3.140000
+[ERROR]: a test message: 3.140000
+[WARN]: a test message: 3.140000
+[INFO]: a test message: 3.140000
+[DEBUG]: a test message: 3.140000
+[TRACE]: a test message: 3.140000
+[INFO]: Input system intialized
+[DEBUG]: Required extensions:
+[DEBUG]: VK_KHR_surface
+[DEBUG]: VK_KHR_xcb_surface
+[DEBUG]: VK_EXT_debug_utils
+[INFO]: Validation layers enabled. Enumerating...
+[INFO]: Searching for layer: VK_LAYER_KHRONOS_validation...
+[INFO]: Found.
+[INFO]: All required validation layers are present.
+[INFO]: Vulkan Instance created.
+[DEBUG]: Creating Vulkan debugger...
+[DEBUG]: Vulkan debugger created.
+[DEBUG]: Creating Vulkan surface...
+[DEBUG]: Vulkan surface created.
+[INFO]: linux_read_sorted_physical_devices:
+[INFO]:      Original order:
+[INFO]:            [0] NVIDIA GeForce RTX 3060
+[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
+[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
+[INFO]:      Sorted order:
+[INFO]:            [0] NVIDIA GeForce RTX 3060  
+[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
+[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
+[INFO]: linux_read_sorted_physical_devices:
+[INFO]:      Original order:
+[INFO]:            [0] NVIDIA GeForce RTX 3060
+[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
+[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
+[INFO]:      Sorted order:
+[INFO]:            [0] NVIDIA GeForce RTX 3060  
+[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
+[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
+[INFO]: linux_read_sorted_physical_devices:
+[INFO]:      Original order:
+[INFO]:            [0] NVIDIA GeForce RTX 3060
+[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
+[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
+[INFO]:      Sorted order:
+[INFO]:            [0] NVIDIA GeForce RTX 3060  
+[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
+[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
+[INFO]: linux_read_sorted_physical_devices:
+[INFO]:      Original order:
+[INFO]:            [0] NVIDIA GeForce RTX 3060
+[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
+[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
+[INFO]:      Sorted order:
+[INFO]:            [0] NVIDIA GeForce RTX 3060  
+[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
+[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_radeon.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_virtio.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_asahi.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_gfxstream.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_intel_hasvk.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_nouveau.so due to not having any physical devices
+[INFO]: Device is not a discrete GPU and one is required, skipping...
+[INFO]: Graphics | Present | Compute | Transfer | Name
+[INFO]:        1 |       1 |       1 |        1 | NVIDIA GeForce RTX 3060
+[INFO]: Device meets queue requirements.
+[TRACE]: Graphics Family Index: 0
+[TRACE]: Present Family Index:  2
+[TRACE]: Transfer Family Index: 5
+[TRACE]: Compute Family Index:  2
+[INFO]: Selected device: 'NVIDIA GeForce RTX 3060'.
+[INFO]: GPU type is Descrete.
+[INFO]: GPU Driver version: 595.364.448
+[INFO]: Vulkan API version: 1.4.329
+[INFO]: Local GPU memory: 12.00 Gib
+[INFO]: Shared System memory: 22.94 Gib
+[INFO]: Physical device selected
+[INFO]: Creating logical device....
+[INFO]: Inserted device layer "VK_LAYER_KHRONOS_validation" (/usr/lib/x86_64-linux-gnu/libVkLayer_khronos_validation.so)
+[INFO]: Failed to find vkGetDeviceProcAddr in layer "/usr/lib/x86_64-linux-gnu/libVkLayer_MESA_device_select.so"
+[INFO]: vkCreateDevice layer callstack setup to:
+[INFO]:    <Application>
+[INFO]:      ||
+[INFO]:    <Loader>
+[INFO]:      ||
+[INFO]:    VK_LAYER_KHRONOS_validation
+[INFO]:            Type: Explicit
+[INFO]:            Enabled By: By the Application
+[INFO]:            Manifest: /usr/share/vulkan/explicit_layer.d/VkLayer_khronos_validation.json
+[INFO]:            Library:  /usr/lib/x86_64-linux-gnu/libVkLayer_khronos_validation.so
+[INFO]:      ||
+[INFO]:    <Device>
+[INFO]:        Using "NVIDIA GeForce RTX 3060" with driver: "/usr/lib/x86_64-linux-gnu/libGLX_nvidia.so.595.91.07"
+[INFO]: vkCreateDevice(): Cannot open shader validation cache at /home/cluelessbutcher/.cache/shader_validation_cache-1000.bin for reading (it may not exist yet)
+[INFO]: Logical device created
+[INFO]: Queues obtained.
+[INFO]: Graphics command pool created
+[INFO]: Swapchain created successfully.
+[DEBUG]: Vulkan command buffers created.
+[DEBUG]: Graphics pipeline created!
+[INFO]: Vulkan renderer initialized successfully.
+[DEBUG]: game_initialize() called
+[INFO]: System memory use(tagged)
+    UNKNOWN          : 0.00B
+    ARRAY            : 0.00B
+    LINEAR_ALLOCATOR : 0.00B
+    DARRAY           : 4.79Kib
+    DICT             : 0.00B
+    RING QUEUE       : 0.00B
+    BST              : 0.00B
+    STRING           : 0.00B
+    APPLICATION      : 0.00B
+    JOB              : 0.00B
+    TEXTURE          : 0.00B
+    MATERIAL INSTANCE: 0.00B
+    RENDERER         : 124.00B
+    GAME             : 0.00B
+    TRANSFORM        : 0.00B
+    ENTITY           : 0.00B
+    SCENE            : 0.00B
+
+[DEBUG]: Window resize: 1280, 720
+[INFO]: Vulkan renderer backend->resized: w/h/gen: 1280/720/1
+[INFO]: Swapchain created successfully.
+[DEBUG]: Vulkan command buffers created.
+[INFO]: Resized, booting.
+[INFO]: Left alt pressed
+[DEBUG]: '¤' key pressed in window
+[DEBUG]: 'L' key pressed in window
+[DEBUG]: '
+[DEBUG]: 'K' key pressed in window
+[DEBUG]: '
+[DEBUG]: Explicit - A Pressed
+[DEBUG]: 'J' key pressed in window
+[DEBUG]: 'L' key released in window
+[DEBUG]: 'K' key released in window
+[DEBUG]: 'S' key pressed in window
+[DEBUG]: 'D' key pressed in window
+[DEBUG]: 'J' key released in window
+[DEBUG]: 'L' key pressed in window
+[DEBUG]: 'A' key released in window
+[DEBUG]: 'F' key pressed in window
+[DEBUG]: 'S' key released in window
+[DEBUG]: 'K' key pressed in window
+[DEBUG]: 'D' key released in window
+[DEBUG]: 'L' key released in window
+[DEBUG]: 'F' key released in window
+[DEBUG]: 'J' key pressed in window
+[DEBUG]: 'K' key released in window
+[DEBUG]: 'J' key released in window
