@@ -20,58 +20,57 @@
 [DEBUG]: Vulkan surface created.
 [INFO]: linux_read_sorted_physical_devices:
 [INFO]:      Original order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060
+[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
 [INFO]:      Sorted order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060  
+[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)  
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
 [INFO]: linux_read_sorted_physical_devices:
 [INFO]:      Original order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060
+[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
 [INFO]:      Sorted order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060  
+[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)  
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
 [INFO]: linux_read_sorted_physical_devices:
 [INFO]:      Original order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060
+[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
 [INFO]:      Sorted order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060  
+[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)  
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
 [INFO]: linux_read_sorted_physical_devices:
 [INFO]:      Original order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060
+[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
 [INFO]:      Sorted order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060  
+[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)  
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
-[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_radeon.so due to not having any physical devices
-[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_virtio.so due to not having any physical devices
-[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_asahi.so due to not having any physical devices
-[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_gfxstream.so due to not having any physical devices
 [INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_intel_hasvk.so due to not having any physical devices
-[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_nouveau.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_radeon.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_asahi.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_virtio.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_gfxstream.so due to not having any physical devices
 [INFO]: Device is not a discrete GPU and one is required, skipping...
 [INFO]: Graphics | Present | Compute | Transfer | Name
-[INFO]:        1 |       1 |       1 |        1 | NVIDIA GeForce RTX 3060
+[INFO]:        1 |       1 |       1 |        1 | NVIDIA GeForce RTX 3060 (NVK GA106)
 [INFO]: Device meets queue requirements.
 [TRACE]: Graphics Family Index: 0
-[TRACE]: Present Family Index:  2
-[TRACE]: Transfer Family Index: 5
-[TRACE]: Compute Family Index:  2
-[INFO]: Selected device: 'NVIDIA GeForce RTX 3060'.
+[TRACE]: Present Family Index:  1
+[TRACE]: Transfer Family Index: 1
+[TRACE]: Compute Family Index:  0
+[INFO]: Selected device: 'NVIDIA GeForce RTX 3060 (NVK GA106)'.
 [INFO]: GPU type is Descrete.
-[INFO]: GPU Driver version: 595.364.448
-[INFO]: Vulkan API version: 1.4.329
+[INFO]: GPU Driver version: 26.0.8
+[INFO]: Vulkan API version: 1.4.335
 [INFO]: Local GPU memory: 12.00 Gib
 [INFO]: Shared System memory: 22.94 Gib
 [INFO]: Physical device selected
@@ -90,8 +89,10 @@
 [INFO]:            Library:  /usr/lib/x86_64-linux-gnu/libVkLayer_khronos_validation.so
 [INFO]:      ||
 [INFO]:    <Device>
-[INFO]:        Using "NVIDIA GeForce RTX 3060" with driver: "/usr/lib/x86_64-linux-gnu/libGLX_nvidia.so.595.91.07"
-[INFO]: vkCreateDevice(): Cannot open shader validation cache at /home/cluelessbutcher/.cache/shader_validation_cache-1000.bin for reading (it may not exist yet)
+[ERROR]: vkCreateDevice(): pCreateInfo->pQueueCreateInfos[2] uses the same queueFamilyIndex (1) and flags (VkDeviceQueueCreateFlags(0)) as pCreateInfo->pQueueCreateInfos[1].
+The Vulkan spec states: The queueFamilyIndex member of each element of pQueueCreateInfos must be unique within pQueueCreateInfos , except that two members can share the same queueFamilyIndex if one describes protected-capable queues and one describes queues that are not protected-capable (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-VkDeviceCreateInfo-queueFamilyIndex-02802)
+[INFO]:        Using "NVIDIA GeForce RTX 3060 (NVK GA106)" with driver: "/usr/lib/x86_64-linux-gnu/libvulkan_nouveau.so"
+[INFO]: vkCreateDevice(): Cannot open shader validation cache at /home/sorena/.cache/shader_validation_cache-1000.bin for reading (it may not exist yet)
 [INFO]: Logical device created
 [INFO]: Queues obtained.
 [INFO]: Graphics command pool created
@@ -104,7 +105,7 @@
     UNKNOWN          : 0.00B
     ARRAY            : 0.00B
     LINEAR_ALLOCATOR : 0.00B
-    DARRAY           : 4.79Kib
+    DARRAY           : 3.87Kib
     DICT             : 0.00B
     RING QUEUE       : 0.00B
     BST              : 0.00B
@@ -113,7 +114,7 @@
     JOB              : 0.00B
     TEXTURE          : 0.00B
     MATERIAL INSTANCE: 0.00B
-    RENDERER         : 124.00B
+    RENDERER         : 160.00B
     GAME             : 0.00B
     TRANSFORM        : 0.00B
     ENTITY           : 0.00B
@@ -124,515 +125,5 @@
 [INFO]: Swapchain created successfully.
 [DEBUG]: Vulkan command buffers created.
 [INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1280, 722
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1280/722/2
-[DEBUG]: Window resize: 1282, 724
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1282/724/3
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1292, 727
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1292/727/4
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1301, 729
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1301/729/5
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1307, 732
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1307/732/6
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1311, 733
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1311/733/7
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1317, 735
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1317/735/8
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1322, 738
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1322/738/9
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1326, 739
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1326/739/10
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1330, 741
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1330/741/11
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1333, 742
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1333/742/12
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1338, 744
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1338/744/13
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1343, 746
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1343/746/14
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1345, 748
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1345/748/15
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1347, 748
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1347/748/16
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1349, 750
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1349/750/17
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1351, 751
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1351/751/18
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1354, 752
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1354/752/19
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1356, 754
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1356/754/20
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1361, 757
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1361/757/21
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1364, 758
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1364/758/22
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1366, 760
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1366/760/23
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1369, 762
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1369/762/24
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1370, 763
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1370/763/25
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1375, 765
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1375/765/26
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1377, 766
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1377/766/27
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1378, 766
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1378/766/28
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1381, 769
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1381/769/29
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1383, 769
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1383/769/30
-[DEBUG]: Window resize: 1384, 769
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1384/769/31
-[DEBUG]: Window resize: 1386, 771
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1386/771/32
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1387, 772
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1387/772/33
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1388, 773
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1388/773/34
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1391, 776
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1391/776/35
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1392, 777
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1392/777/36
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1395, 780
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1395/780/37
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1399, 782
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1399/782/38
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1400, 783
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1400/783/39
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1402, 785
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1402/785/40
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1403, 786
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1403/786/41
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1404, 787
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1404/787/42
-[DEBUG]: Window resize: 1404, 788
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1404/788/43
-[DEBUG]: Window resize: 1405, 789
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1405/789/44
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1406, 790
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1406/790/45
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1408, 791
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1408/791/46
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1409, 792
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1409/792/47
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1410, 793
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1410/793/48
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1411, 794
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1411/794/49
-[DEBUG]: Window resize: 1412, 796
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1412/796/50
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1413, 796
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1413/796/51
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1415, 796
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1415/796/52
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1416, 797
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1416/797/53
-[DEBUG]: Window resize: 1417, 797
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1417/797/54
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1418, 798
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1418/798/55
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1419, 799
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1419/799/56
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1420, 800
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1420/800/57
-[DEBUG]: Window resize: 1421, 801
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1421/801/58
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1422, 802
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1422/802/59
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1423, 803
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1423/803/60
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1424, 804
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1424/804/61
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1426, 805
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1426/805/62
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1427, 806
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1427/806/63
-[DEBUG]: Window resize: 1428, 807
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1428/807/64
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1428, 808
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1428/808/65
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1429, 810
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1429/810/66
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1430, 810
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1430/810/67
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1432, 812
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1432/812/68
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1433, 813
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1433/813/69
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1435, 815
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1435/815/70
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1436, 815
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1436/815/71
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1437, 816
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1437/816/72
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1439, 818
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1439/818/73
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1440, 818
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1440/818/74
-[DEBUG]: Window resize: 1441, 818
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1441/818/75
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1442, 819
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1442/819/76
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1443, 820
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1443/820/77
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1445, 822
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1445/822/78
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1448, 825
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1448/825/79
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1448, 826
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1448/826/80
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1449, 828
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1449/828/81
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1450, 829
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1450/829/82
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1451, 830
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1451/830/83
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1452, 832
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1452/832/84
-[DEBUG]: Window resize: 1453, 833
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1453/833/85
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1454, 834
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1454/834/86
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1454, 835
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1454/835/87
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1454, 837
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1454/837/88
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[DEBUG]: Window resize: 1455, 838
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1455/838/89
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1455, 839
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1455/839/90
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1455, 840
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1455/840/91
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1455, 841
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1455/841/92
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1456, 842
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1456/842/93
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1457, 843
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1457/843/94
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
-[INFO]: Swapchain created successfully.
-[DEBUG]: Window resize: 1863, 1016
-[INFO]: Vulkan renderer backend->resized: w/h/gen: 1863/1016/95
-[INFO]: Swapchain created successfully.
-[DEBUG]: Vulkan command buffers created.
-[INFO]: Resized, booting.
 [INFO]: Left alt pressed
 [DEBUG]: '¤' key pressed in window
-[DEBUG]: Destroying Vulkan device...
-[INFO]: Destroying logical device...
-[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x62da7d87fc20, VkSemaphore 0x180000000018 has not been destroyed.
-The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
-[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x62da7d87fc20, VkCommandPool 0x30000000003 has not been destroyed.
-The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
-[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x62da7d87fc20, VkShaderModule 0x1a000000001a has not been destroyed.
-The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
-[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x62da7d87fc20, VkShaderModule 0x190000000019 has not been destroyed.
-The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
-[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x62da7d87fc20, VkPipelineLayout 0x1b000000001b has not been destroyed.
-The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
-[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x62da7d87fc20, VkPipeline 0x1c000000001c has not been destroyed.
-The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
-[INFO]: Releasing physical device resourses
-[DEBUG]: Destroying Vulkan surface...
-[DEBUG]: Destroying Vulkan debugger...
-[DEBUG]: Destroying Vulkan instance...

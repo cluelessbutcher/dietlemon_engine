@@ -63,9 +63,9 @@ bool vulkan_device_create(vulkan_context* context) {
         queue_create_info[i].sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
         queue_create_info[i].queueFamilyIndex = indices[i];
         queue_create_info[i].queueCount = 1;
-        if (indices[i] == context->device.graphics_queue_index) {
-            queue_create_info[i].queueCount = 2;
-        }
+        //if (indices[i] == context->device.graphics_queue_index) {
+        // queue_create_info[i].queueCount = 2;
+        // }
         queue_create_info[i].flags = 0;
         queue_create_info[i].pNext = 0;
         float queue_priority = 1.0f;

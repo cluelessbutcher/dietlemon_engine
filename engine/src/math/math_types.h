@@ -14,7 +14,7 @@ typedef union vec2_u {
     };
 } vec2;
 
-typedef struct vec3_u {  
+typedef union vec3_u {  
   float elements[3];
   struct {
     union {
