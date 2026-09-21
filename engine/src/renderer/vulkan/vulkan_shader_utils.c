@@ -43,10 +43,5 @@ bool create_shader_module(vulkan_context* context,
   shader_stages[stage_index].shader_stage_create_info.module = shader_stages[stage_index].handle;
   shader_stages[stage_index].shader_stage_create_info.pName = "main";
   
-  if (file_buffer) {
-    dfree(file_buffer, sizeof(uint8_t) * size, MEMORY_TAG_STRING);
-    file_buffer = 0;
-  }
-  
   return true;
 }

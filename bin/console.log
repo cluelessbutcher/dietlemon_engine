@@ -127,3 +127,21 @@ The Vulkan spec states: The queueFamilyIndex member of each element of pQueueCre
 [INFO]: Resized, booting.
 [INFO]: Left alt pressed
 [DEBUG]: '¤' key pressed in window
+[DEBUG]: Destroying Vulkan device...
+[INFO]: Destroying logical device...
+[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x5d4a7444f710, VkSemaphore 0x1e000000001e has not been destroyed.
+The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
+[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x5d4a7444f710, VkCommandPool 0x30000000003 has not been destroyed.
+The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
+[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x5d4a7444f710, VkShaderModule 0x200000000020 has not been destroyed.
+The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
+[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x5d4a7444f710, VkShaderModule 0x1f000000001f has not been destroyed.
+The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
+[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x5d4a7444f710, VkPipelineLayout 0x210000000021 has not been destroyed.
+The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
+[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x5d4a7444f710, VkPipeline 0x220000000022 has not been destroyed.
+The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
+[INFO]: Releasing physical device resourses
+[DEBUG]: Destroying Vulkan surface...
+[DEBUG]: Destroying Vulkan debugger...
+[DEBUG]: Destroying Vulkan instance...
