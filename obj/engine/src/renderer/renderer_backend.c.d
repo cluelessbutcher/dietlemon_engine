@@ -19,4 +19,5 @@ obj/engine/src/renderer/renderer_backend.c.o: \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdbool.h \
+  engine/src/math/math_types.h \
   engine/src/renderer/vulkan/vulkan_backend.h

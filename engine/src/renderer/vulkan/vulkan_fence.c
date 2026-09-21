@@ -1,6 +1,6 @@
 #include "vulkan_fence.h"
-
 #include "core/logger.h"
+#include <stdlib.h>
 
 void vulkan_fence_create(vulkan_context* context, bool create_signaled, vulkan_fence* out_fence) {
     out_fence->is_signaled = create_signaled;
@@ -8,7 +8,6 @@ void vulkan_fence_create(vulkan_context* context, bool create_signaled, vulkan_f
     if (out_fence->is_signaled) {
         fence_create_info.flags = VK_FENCE_CREATE_SIGNALED_BIT;
     }
-
     VK_CHECK(vkCreateFence(context->device.logical_device, &fence_create_info, context->allocator, &out_fence->handle));
 }
 
@@ -36,8 +35,8 @@ bool vulkan_fence_wait(vulkan_context* context, vulkan_fence* fence, uint64_t ti
             DWARN("vk_fence_wait - Timed out");
             break;
         case VK_ERROR_DEVICE_LOST:
-            DERROR("vk_fence_wait - VK_ERROR_DEVICE_LOST.");
-            break;
+            DERROR("vk_fence_wait - VK_ERROR_DEVICE_LOST. Aborting.");
+            return false;
         case VK_ERROR_OUT_OF_HOST_MEMORY:
             DERROR("vk_fence_wait - VK_ERROR_OUT_OF_HOST_MEMORY.");
             break;
@@ -51,7 +50,6 @@ bool vulkan_fence_wait(vulkan_context* context, vulkan_fence* fence, uint64_t ti
     } else {
         return true;
     }
-    
     return false;
 }
 

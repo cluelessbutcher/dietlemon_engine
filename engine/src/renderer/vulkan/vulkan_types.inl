@@ -4,6 +4,8 @@
 
 #include "core/asserts.h"
 
+#include "renderer/renderer_types.inl"
+
 #include <vulkan/vulkan.h>
 
 #define VK_CHECK(expr)                          \
@@ -128,6 +130,11 @@ typedef struct vulkan_pipeline {
 
 typedef struct vulkan_object_shader {
   vulkan_shader_stage stages[OBJECT_SHADER_STAGE_COUNT];
+  VkDescriptorPool global_descriptor_pool;
+  VkDescriptorSetLayout global_descriptor_set_layout;
+  VkDescriptorSet global_descriptor_sets[3];
+  global_uniform_object global_ubo;
+  vulkan_buffer global_uniform_buffer;
   vulkan_pipeline pipeline;
 } vulkan_object_shader;
 

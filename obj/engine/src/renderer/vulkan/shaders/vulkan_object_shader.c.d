@@ -19,7 +19,8 @@ obj/engine/src/renderer/vulkan/shaders/vulkan_object_shader.c.o: \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdbool.h \
-  engine/src/core/asserts.h /usr/include/vulkan/vulkan.h \
+  engine/src/core/asserts.h engine/src/renderer/renderer_types.inl \
+  engine/src/math/math_types.h /usr/include/vulkan/vulkan.h \
   /usr/include/vulkan/vk_platform.h \
   /usr/lib/llvm-21/lib/clang/21/include/stddef.h \
   /usr/lib/llvm-21/lib/clang/21/include/__stddef_header_macro.h \
@@ -42,10 +43,10 @@ obj/engine/src/renderer/vulkan/shaders/vulkan_object_shader.c.o: \
   /usr/include/vk_video/vulkan_video_codec_av1std_encode.h \
   /usr/include/vk_video/vulkan_video_codec_vp9std.h \
   /usr/include/vk_video/vulkan_video_codec_vp9std_decode.h \
-  engine/src/renderer/renderer_types.inl engine/src/core/logger.h \
-  engine/src/core/dmemory.h engine/src/math/math_types.h \
+  engine/src/core/logger.h engine/src/core/dmemory.h \
   engine/src/renderer/vulkan/vulkan_shader_utils.h \
-  engine/src/renderer/vulkan/vulkan_pipeline.h /usr/include/string.h \
+  engine/src/renderer/vulkan/vulkan_pipeline.h \
+  engine/src/renderer/vulkan/vulkan_buffer.h /usr/include/string.h \
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
   /usr/include/strings.h

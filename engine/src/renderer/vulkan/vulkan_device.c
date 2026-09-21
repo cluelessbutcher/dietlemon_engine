@@ -37,38 +37,31 @@ bool vulkan_device_create(vulkan_context* context) {
     if (!select_physical_device(context)) {
         return false;
     }
-
     DINFO("Creating logical device....");
-    bool present_shares_graphics_queue = context->device.graphics_queue_index == context->device.present_queue_index;
-    bool transfer_shares_graphics_queue = context->device.graphics_queue_index == context->device.transfer_queue_index;
-    uint32_t index_count = 1;
-    if (!present_shares_graphics_queue) {
-        index_count++;
-    }
-    if (!transfer_shares_graphics_queue) {
-        index_count++;
-    }
-    uint32_t indices[32];
-    uint8_t index = 0;
-    indices[index++] = context->device.graphics_queue_index;
-    if (!present_shares_graphics_queue) {
-        indices[index++] = context->device.present_queue_index;
-    }
-    if (!transfer_shares_graphics_queue) {
-        indices[index++] = context->device.transfer_queue_index;
+
+    uint32_t indices[3];
+    uint32_t index_count = 0;
+
+    indices[index_count++] = context->device.graphics_queue_index;
+
+    if (context->device.present_queue_index != context->device.graphics_queue_index) {
+        indices[index_count++] = context->device.present_queue_index;
     }
 
-    VkDeviceQueueCreateInfo queue_create_info[32];
+    if (context->device.transfer_queue_index != context->device.graphics_queue_index &&
+        context->device.transfer_queue_index != context->device.present_queue_index) {
+        indices[index_count++] = context->device.transfer_queue_index;
+    }
+
+    VkDeviceQueueCreateInfo queue_create_info[3];
+    float queue_priority = 1.0f;
+
     for (uint32_t i = 0; i < index_count; ++i) {
         queue_create_info[i].sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
         queue_create_info[i].queueFamilyIndex = indices[i];
         queue_create_info[i].queueCount = 1;
-        //if (indices[i] == context->device.graphics_queue_index) {
-        // queue_create_info[i].queueCount = 2;
-        // }
         queue_create_info[i].flags = 0;
         queue_create_info[i].pNext = 0;
-        float queue_priority = 1.0f;
         queue_create_info[i].pQueuePriorities = &queue_priority;
     }
 
@@ -82,7 +75,6 @@ bool vulkan_device_create(vulkan_context* context) {
     device_create_info.enabledExtensionCount = 1;
     const char* extension_names = VK_KHR_SWAPCHAIN_EXTENSION_NAME;
     device_create_info.ppEnabledExtensionNames = &extension_names;
-
     device_create_info.enabledLayerCount = 0;
     device_create_info.ppEnabledLayerNames = 0;
 
@@ -103,7 +95,7 @@ bool vulkan_device_create(vulkan_context* context) {
         context->allocator,
         &context->device.graphics_command_pool));
     DINFO("Graphics command pool created");
-    
+
     return true;
 }
 

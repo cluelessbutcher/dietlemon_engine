@@ -89,10 +89,7 @@
 [INFO]:            Library:  /usr/lib/x86_64-linux-gnu/libVkLayer_khronos_validation.so
 [INFO]:      ||
 [INFO]:    <Device>
-[ERROR]: vkCreateDevice(): pCreateInfo->pQueueCreateInfos[2] uses the same queueFamilyIndex (1) and flags (VkDeviceQueueCreateFlags(0)) as pCreateInfo->pQueueCreateInfos[1].
-The Vulkan spec states: The queueFamilyIndex member of each element of pQueueCreateInfos must be unique within pQueueCreateInfos , except that two members can share the same queueFamilyIndex if one describes protected-capable queues and one describes queues that are not protected-capable (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-VkDeviceCreateInfo-queueFamilyIndex-02802)
 [INFO]:        Using "NVIDIA GeForce RTX 3060 (NVK GA106)" with driver: "/usr/lib/x86_64-linux-gnu/libvulkan_nouveau.so"
-[INFO]: vkCreateDevice(): Cannot open shader validation cache at /home/sorena/.cache/shader_validation_cache-1000.bin for reading (it may not exist yet)
 [INFO]: Logical device created
 [INFO]: Queues obtained.
 [INFO]: Graphics command pool created
@@ -109,7 +106,7 @@ The Vulkan spec states: The queueFamilyIndex member of each element of pQueueCre
     DICT             : 0.00B
     RING QUEUE       : 0.00B
     BST              : 0.00B
-    STRING           : 0.00B
+    STRING           : 1.80Kib
     APPLICATION      : 0.00B
     JOB              : 0.00B
     TEXTURE          : 0.00B
@@ -124,24 +121,7 @@ The Vulkan spec states: The queueFamilyIndex member of each element of pQueueCre
 [INFO]: Vulkan renderer backend->resized: w/h/gen: 1280/720/1
 [INFO]: Swapchain created successfully.
 [DEBUG]: Vulkan command buffers created.
+[DEBUG]: Graphics pipeline created!
 [INFO]: Resized, booting.
 [INFO]: Left alt pressed
 [DEBUG]: '¤' key pressed in window
-[DEBUG]: Destroying Vulkan device...
-[INFO]: Destroying logical device...
-[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x5d4a7444f710, VkSemaphore 0x1e000000001e has not been destroyed.
-The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
-[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x5d4a7444f710, VkCommandPool 0x30000000003 has not been destroyed.
-The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
-[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x5d4a7444f710, VkShaderModule 0x200000000020 has not been destroyed.
-The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
-[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x5d4a7444f710, VkShaderModule 0x1f000000001f has not been destroyed.
-The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
-[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x5d4a7444f710, VkPipelineLayout 0x210000000021 has not been destroyed.
-The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
-[ERROR]: vkDestroyDevice(): Object Tracking - For VkDevice 0x5d4a7444f710, VkPipeline 0x220000000022 has not been destroyed.
-The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
-[INFO]: Releasing physical device resourses
-[DEBUG]: Destroying Vulkan surface...
-[DEBUG]: Destroying Vulkan debugger...
-[DEBUG]: Destroying Vulkan instance...
