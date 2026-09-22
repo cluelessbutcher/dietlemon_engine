@@ -179,3 +179,8 @@ typedef struct vulkan_context {
   
   int32_t (*find_memory_index)(uint32_t type_filter, uint32_t property_flags);
 } vulkan_context;
+
+typedef struct vulkan_texture_data {
+  vulkan_image image;
+  VkSampler sampler;
+} vulkan_texture_data;

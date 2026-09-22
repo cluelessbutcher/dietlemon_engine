@@ -27,4 +27,5 @@ obj/testbed/src/game.c.o: testbed/src/game.c testbed/src/game.h \
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
   /usr/include/strings.h engine/src/renderer/renderer_frontend.h \
-  engine/src/renderer/renderer_types.inl
+  engine/src/renderer/renderer_types.inl \
+  engine/src/resources/resource_types.h

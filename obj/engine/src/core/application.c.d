@@ -22,4 +22,5 @@ obj/engine/src/core/application.c.o: engine/src/core/application.c \
   engine/src/core/event.h engine/src/core/input.h \
   engine/src/core/clock.h engine/src/memory/linear_allocator.h \
   engine/src/renderer/renderer_frontend.h \
-  engine/src/renderer/renderer_types.inl engine/src/math/math_types.h
+  engine/src/renderer/renderer_types.inl engine/src/math/math_types.h \
+  engine/src/resources/resource_types.h

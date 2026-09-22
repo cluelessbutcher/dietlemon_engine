@@ -102,4 +102,5 @@ obj/engine/src/platform/platform.c.o: engine/src/platform/platform.c \
   /usr/include/vk_video/vulkan_video_codec_vp9std_decode.h \
   /usr/include/vulkan/vulkan_xcb.h \
   engine/src/renderer/vulkan/vulkan_types.inl engine/src/core/asserts.h \
-  engine/src/renderer/renderer_types.inl engine/src/math/math_types.h
+  engine/src/renderer/renderer_types.inl engine/src/math/math_types.h \
+  engine/src/resources/resource_types.h

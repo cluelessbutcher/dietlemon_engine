@@ -20,8 +20,8 @@ obj/engine/src/renderer/vulkan/vulkan_buffer.c.o: \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdbool.h \
   engine/src/core/asserts.h engine/src/renderer/renderer_types.inl \
-  engine/src/math/math_types.h /usr/include/vulkan/vulkan.h \
-  /usr/include/vulkan/vk_platform.h \
+  engine/src/math/math_types.h engine/src/resources/resource_types.h \
+  /usr/include/vulkan/vulkan.h /usr/include/vulkan/vk_platform.h \
   /usr/lib/llvm-21/lib/clang/21/include/stddef.h \
   /usr/lib/llvm-21/lib/clang/21/include/__stddef_header_macro.h \
   /usr/lib/llvm-21/lib/clang/21/include/__stddef_ptrdiff_t.h \

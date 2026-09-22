@@ -96,3 +96,11 @@ bool renderer_draw_frame(render_packet* packet) {
 void renderer_set_view(mat4 view) {
   state_ptr->view = view;
 }
+
+void renderer_create_texture(const char* name, bool auto_release, int32_t width, int32_t height, int32_t channel_count, const uint8_t* pixels, bool has_transparency, struct texture* out_texture) {
+  state_ptr->backend.create_texture(name, auto_release, width, height, channel_count, pixels, has_transparency, out_texture);
+}
+
+void renderer_destroy_texture(struct texture* texture) {
+  state_ptr->backend.destroy_texture(texture);
+}

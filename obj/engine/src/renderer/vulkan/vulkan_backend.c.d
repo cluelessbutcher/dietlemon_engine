@@ -20,7 +20,7 @@ obj/engine/src/renderer/vulkan/vulkan_backend.c.o: \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdbool.h \
-  engine/src/math/math_types.h \
+  engine/src/math/math_types.h engine/src/resources/resource_types.h \
   engine/src/renderer/vulkan/vulkan_types.inl engine/src/core/asserts.h \
   /usr/include/vulkan/vulkan.h /usr/include/vulkan/vk_platform.h \
   /usr/lib/llvm-21/lib/clang/21/include/stddef.h \
@@ -52,7 +52,8 @@ obj/engine/src/renderer/vulkan/vulkan_backend.c.o: \
   engine/src/renderer/vulkan/vulkan_framebuffer.h \
   engine/src/renderer/vulkan/vulkan_fence.h \
   engine/src/renderer/vulkan/vulkan_utils.h \
-  engine/src/renderer/vulkan/vulkan_buffer.h engine/src/core/logger.h \
+  engine/src/renderer/vulkan/vulkan_buffer.h \
+  engine/src/renderer/vulkan/vulkan_image.h engine/src/core/logger.h \
   engine/src/core/dmemory.h engine/src/core/application.h \
   engine/src/containers/darray.h engine/src/platform/platform.h \
   engine/src/renderer/vulkan/shaders/vulkan_object_shader.h \

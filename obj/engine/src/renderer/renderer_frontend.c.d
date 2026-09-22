@@ -19,10 +19,10 @@ obj/engine/src/renderer/renderer_frontend.c.o: \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdbool.h \
-  engine/src/math/math_types.h engine/src/renderer/renderer_backend.h \
-  engine/src/core/logger.h engine/src/core/dmemory.h \
-  engine/src/math/dmath.h /usr/include/string.h \
-  /usr/lib/llvm-21/lib/clang/21/include/stddef.h \
+  engine/src/math/math_types.h engine/src/resources/resource_types.h \
+  engine/src/renderer/renderer_backend.h engine/src/core/logger.h \
+  engine/src/core/dmemory.h engine/src/math/dmath.h \
+  /usr/include/string.h /usr/lib/llvm-21/lib/clang/21/include/stddef.h \
   /usr/lib/llvm-21/lib/clang/21/include/__stddef_size_t.h \
   /usr/lib/llvm-21/lib/clang/21/include/__stddef_null.h \
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
