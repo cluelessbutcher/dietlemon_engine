@@ -18,5 +18,13 @@ obj/testbed/src/game.c.o: testbed/src/game.c testbed/src/game.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdbool.h \
   engine/src/game_types.h engine/src/core/application.h \
-  engine/src/core/logger.h engine/src/core/dmemory.h \
-  engine/src/core/input.h
+  engine/src/math/math_types.h engine/src/core/logger.h \
+  engine/src/core/dmemory.h engine/src/core/input.h \
+  engine/src/math/dmath.h /usr/include/string.h \
+  /usr/lib/llvm-21/lib/clang/21/include/stddef.h \
+  /usr/lib/llvm-21/lib/clang/21/include/__stddef_size_t.h \
+  /usr/lib/llvm-21/lib/clang/21/include/__stddef_null.h \
+  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+  /usr/include/strings.h engine/src/renderer/renderer_frontend.h \
+  engine/src/renderer/renderer_types.inl

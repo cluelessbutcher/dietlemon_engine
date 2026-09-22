@@ -27,6 +27,10 @@ float dabs(float x) {
   return fabsf(x);
 }
 
+float dsqrt(float x) {
+  return sqrt(x);
+}
+
 int32_t drandom() {
   if (!rand_seeded) {
     srand((uint32_t)platform_get_absolute_time());

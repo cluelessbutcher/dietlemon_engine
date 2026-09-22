@@ -27,7 +27,7 @@ DAPI float dcos(float x);
 DAPI float dtan(float x);
 DAPI float dacos(float x);
 DAPI float dsqrt(float x);
-DAPI float kabs(float x);
+DAPI float dabs(float x);
 
 DINLINE bool is_power_of_2(uint64_t value) {
     return (value != 0) && ((value & (value - 1)) == 0);
@@ -105,11 +105,11 @@ DINLINE vec2 vec2_normalized(vec2 vector) {
 }
 
 DINLINE bool vec2_compare(vec2 vector_0, vec2 vector_1, float tolerance) {
-    if (kabs(vector_0.x - vector_1.x) > tolerance) {
+    if (dabs(vector_0.x - vector_1.x) > tolerance) {
         return false;
     }
 
-    if (kabs(vector_0.y - vector_1.y) > tolerance) {
+    if (dabs(vector_0.y - vector_1.y) > tolerance) {
         return false;
     }
 
@@ -238,15 +238,15 @@ DINLINE vec3 vec3_cross(vec3 vector_0, vec3 vector_1) {
 }
 
 DINLINE const bool vec3_compare(vec3 vector_0, vec3 vector_1, float tolerance) {
-    if (kabs(vector_0.x - vector_1.x) > tolerance) {
+    if (dabs(vector_0.x - vector_1.x) > tolerance) {
         return false;
     }
 
-    if (kabs(vector_0.y - vector_1.y) > tolerance) {
+    if (dabs(vector_0.y - vector_1.y) > tolerance) {
         return false;
     }
 
-    if (kabs(vector_0.z - vector_1.z) > tolerance) {
+    if (dabs(vector_0.z - vector_1.z) > tolerance) {
         return false;
     }
 

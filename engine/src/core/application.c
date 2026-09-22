@@ -249,7 +249,7 @@ bool application_on_resized(uint16_t code, void* sender, void* listener_inst, ev
           app_state->is_suspended = false;
         }
         app_state->game_inst->on_resize(app_state->game_inst, width, height);
-        renderer_on_resize(width, height);
+        renderer_on_resized(width, height);
       }
     }
   }

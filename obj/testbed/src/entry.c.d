@@ -18,5 +18,5 @@ obj/testbed/src/entry.c.o: testbed/src/entry.c testbed/src/game.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdbool.h \
   engine/src/game_types.h engine/src/core/application.h \
-  engine/src/entry.h engine/src/core/logger.h \
-  engine/src/platform/platform.h
+  engine/src/math/math_types.h engine/src/entry.h \
+  engine/src/core/logger.h engine/src/platform/platform.h
