@@ -20,6 +20,8 @@ STATIC_ASSERT(sizeof(int64_t) == 8, "Expected int64_t to be 8 bytes");
 STATIC_ASSERT(sizeof(float) == 4, "Expected float to be 4 bytes");
 STATIC_ASSERT(sizeof(double) == 8, "Expected double to be 8 bytes");
 
+#define INVALID_ID 4294967295U
+
 #ifdef DEXPORT
 #define DAPI __attribute__((visibility("default")))
 #else

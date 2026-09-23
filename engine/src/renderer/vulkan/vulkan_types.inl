@@ -128,6 +128,19 @@ typedef struct vulkan_pipeline {
 
 #define OBJECT_SHADER_STAGE_COUNT 2
 
+typedef struct vulkan_descriptor_state {
+  uint32_t generations[3];
+} vulkan_descriptor_state;
+
+#define VULKAN_OBJECT_SHADER_DESCRIPTOR_COUNT 2
+
+typedef struct vulkan_object_shader_object_state {
+  VkDescriptorSet descriptor_sets[3];
+  vulkan_descriptor_state descriptor_states[VULKAN_OBJECT_SHADER_DESCRIPTOR_COUNT];
+} vulkan_object_shader_object_state;
+
+#define VULKAN_OBJECT_MAX_OBJECT_COUNT 1024
+
 typedef struct vulkan_object_shader {
   vulkan_shader_stage stages[OBJECT_SHADER_STAGE_COUNT];
   VkDescriptorPool global_descriptor_pool;
@@ -135,16 +148,20 @@ typedef struct vulkan_object_shader {
   VkDescriptorSet global_descriptor_sets[3];
   global_uniform_object global_ubo;
   vulkan_buffer global_uniform_buffer;
+  VkDescriptorPool object_descriptor_pool;
+  VkDescriptorSetLayout object_descriptor_set_layout;
+  vulkan_buffer object_uniform_buffer;
+  uint32_t object_uniform_buffer_index;
+  vulkan_object_shader_object_state object_states[VULKAN_OBJECT_MAX_OBJECT_COUNT];
   vulkan_pipeline pipeline;
 } vulkan_object_shader;
 
 typedef struct vulkan_context {
+  float frame_delta_time;
   uint32_t framebuffer_width;
   uint32_t framebuffer_height;
-
   uint64_t framebuffer_size_generation;
   uint64_t framebuffer_size_last_generation;
-
   VkInstance instance;
   VkAllocationCallbacks* allocator;
   VkSurfaceKHR surface;

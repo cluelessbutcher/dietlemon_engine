@@ -17,8 +17,20 @@ typedef struct global_uniform_object {
   mat4 m_reserved1;
 } global_uniform_object;
 
+typedef struct object_uniform_object {
+  vec4 diffuse_color;
+  vec4 v_reserved0;
+  vec4 v_reserved1;
+  vec4 v_reserved2;
+} object_uniform_object;
+
+typedef struct geometry_render_data {
+  uint32_t object_id;
+  mat4 model;
+  texture* textures[16];
+} geometry_render_data;
+
 typedef struct renderer_backend {
-  struct platform_state* plat_state;
   uint64_t frame_number;
 
   bool (*initialize)(struct renderer_backend* backend, const char* application_name);
@@ -27,8 +39,16 @@ typedef struct renderer_backend {
   bool (*begin_frame)(struct renderer_backend* backend, float delta_time);
   void (*update_global_state)(mat4 projection, mat4 view, vec3 view_position, vec4 ambient_color, int32_t mode);
   bool (*end_frame)(struct renderer_backend* backend, float delta_time);
-  void (*update_object)(mat4 model);
-  void (*create_texture)(const char* name, bool auto_release, int32_t width, int32_t height, int32_t channel_count, const uint8_t* pixels, bool has_transparency, struct texture* out_texture);
+  void (*update_object)(geometry_render_data data);
+  void (*create_texture)(
+                         const char* name,
+                         bool auto_release,
+                         int32_t width,
+                         int32_t height,
+                         int32_t channel_count,
+                         const uint8_t* pixels,
+                         bool has_transparency,
+                         struct texture* out_texture);
   void (*destroy_texture)(struct texture* texture);
 } renderer_backend;
 

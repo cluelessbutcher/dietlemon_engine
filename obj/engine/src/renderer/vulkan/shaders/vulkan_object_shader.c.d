@@ -44,9 +44,10 @@ obj/engine/src/renderer/vulkan/shaders/vulkan_object_shader.c.o: \
   /usr/include/vk_video/vulkan_video_codec_vp9std.h \
   /usr/include/vk_video/vulkan_video_codec_vp9std_decode.h \
   engine/src/core/logger.h engine/src/core/dmemory.h \
-  engine/src/renderer/vulkan/vulkan_shader_utils.h \
-  engine/src/renderer/vulkan/vulkan_pipeline.h \
-  engine/src/renderer/vulkan/vulkan_buffer.h /usr/include/string.h \
+  engine/src/math/dmath.h /usr/include/string.h \
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
-  /usr/include/strings.h
+  /usr/include/strings.h \
+  engine/src/renderer/vulkan/vulkan_shader_utils.h \
+  engine/src/renderer/vulkan/vulkan_pipeline.h \
+  engine/src/renderer/vulkan/vulkan_buffer.h

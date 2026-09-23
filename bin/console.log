@@ -95,21 +95,23 @@
 [INFO]: Graphics command pool created
 [INFO]: Swapchain created successfully.
 [DEBUG]: Vulkan command buffers created.
+[WARN]: vkCreateGraphicsPipelines(): pCreateInfos[0].pVertexInputState Vertex attribute at location 1 not consumed by vertex shader.
 [DEBUG]: Graphics pipeline created!
 [INFO]: Vulkan renderer initialized successfully.
+[TRACE]: Creating default texture...
 [DEBUG]: game_initialize() called
 [INFO]: System memory use(tagged)
     UNKNOWN          : 0.00B
     ARRAY            : 0.00B
     LINEAR_ALLOCATOR : 0.00B
-    DARRAY           : 3.87Kib
+    DARRAY           : 3.84Kib
     DICT             : 0.00B
     RING QUEUE       : 0.00B
     BST              : 0.00B
     STRING           : 1.80Kib
     APPLICATION      : 0.00B
     JOB              : 0.00B
-    TEXTURE          : 0.00B
+    TEXTURE          : 40.00B
     MATERIAL INSTANCE: 0.00B
     RENDERER         : 160.00B
     GAME             : 0.00B
@@ -121,125 +123,60 @@
 [INFO]: Vulkan renderer backend->resized: w/h/gen: 1280/720/1
 [INFO]: Swapchain created successfully.
 [DEBUG]: Vulkan command buffers created.
+[WARN]: vkCreateGraphicsPipelines(): pCreateInfos[0].pVertexInputState Vertex attribute at location 1 not consumed by vertex shader.
 [DEBUG]: Graphics pipeline created!
 [INFO]: Resized, booting.
-[DEBUG]: 'F' key pressed in window
-[DEBUG]: 'F' key released in window
-[DEBUG]: 'D' key pressed in window
-[DEBUG]: 'D' key released in window
-[DEBUG]: Explicit - A Pressed
-[DEBUG]: 'A' key released in window
-[DEBUG]: '&' key pressed in window
-[DEBUG]: '&' key released in window
-[DEBUG]: '(' key pressed in window
-[DEBUG]: '(' key released in window
-[DEBUG]: 'D' key pressed in window
-[DEBUG]: 'W' key pressed in window
-[DEBUG]: '%' key pressed in window
-[DEBUG]: 'W' key released in window
-[DEBUG]: 'D' key released in window
-[DEBUG]: Explicit - A Pressed
-[DEBUG]: '%' key released in window
-[DEBUG]: 'A' key released in window
-[DEBUG]: 'S' key pressed in window
-[DEBUG]: 'S' key released in window
-[DEBUG]: Explicit - A Pressed
-[DEBUG]: 'A' key released in window
-[DEBUG]: ''' key pressed in window
-[DEBUG]: ''' key released in window
-[DEBUG]: Explicit - A Pressed
-[DEBUG]: 'W' key pressed in window
-[DEBUG]: 'A' key released in window
-[DEBUG]: 'D' key pressed in window
-[DEBUG]: 'W' key released in window
-[DEBUG]: 'D' key released in window
-[DEBUG]: '%' key pressed in window
-[DEBUG]: '%' key released in window
-[DEBUG]: ''' key pressed in window
-[DEBUG]: ''' key released in window
-[DEBUG]: Explicit - A Pressed
-[DEBUG]: 'A' key released in window
-[DEBUG]: ''' key pressed in window
-[DEBUG]: ''' key released in window
-[DEBUG]: 'S' key pressed in window
-[DEBUG]: 'S' key released in window
-[DEBUG]: Explicit - A Pressed
-[DEBUG]: 'A' key released in window
-[DEBUG]: 'D' key pressed in window
-[DEBUG]: 'D' key released in window
-[DEBUG]: Explicit - A Pressed
-[DEBUG]: 'A' key released in window
-[DEBUG]: 'D' key pressed in window
-[DEBUG]: 'W' key pressed in window
-[DEBUG]: 'D' key released in window
-[DEBUG]: 'W' key released in window
-[DEBUG]: 'W' key pressed in window
-[DEBUG]: 'W' key released in window
-[DEBUG]: Explicit - A Pressed
-[DEBUG]: 'A' key released in window
-[DEBUG]: 'D' key pressed in window
-[DEBUG]: 'D' key released in window
-[DEBUG]: Explicit - A Pressed
-[DEBUG]: 'A' key released in window
-[DEBUG]: 'S' key pressed in window
-[DEBUG]: 'S' key released in window
-[DEBUG]: '%' key pressed in window
-[DEBUG]: '%' key released in window
-[DEBUG]: '&' key pressed in window
-[DEBUG]: '&' key released in window
-[DEBUG]: ''' key pressed in window
-[DEBUG]: ''' key released in window
-[DEBUG]: '(' key pressed in window
-[DEBUG]: '(' key released in window
-[DEBUG]: 'W' key pressed in window
-[DEBUG]: 'W' key released in window
-[DEBUG]: '&' key pressed in window
-[DEBUG]: '&' key released in window
-[DEBUG]: 'W' key pressed in window
-[DEBUG]: 'W' key released in window
-[DEBUG]: '(' key pressed in window
-[DEBUG]: '(' key released in window
-[DEBUG]: 'S' key pressed in window
-[DEBUG]: 'S' key released in window
-[DEBUG]: 'W' key pressed in window
-[DEBUG]: '&' key pressed in window
-[DEBUG]: 'W' key released in window
-[DEBUG]: 'W' key pressed in window
-[DEBUG]: '&' key released in window
-[DEBUG]: 'W' key released in window
-[DEBUG]: 'S' key pressed in window
-[DEBUG]: '(' key pressed in window
-[DEBUG]: 'S' key released in window
-[DEBUG]: '(' key released in window
-[DEBUG]: '&' key pressed in window
-[DEBUG]: 'W' key pressed in window
-[DEBUG]: '&' key released in window
-[DEBUG]: 'W' key released in window
-[DEBUG]: '(' key pressed in window
-[DEBUG]: 'S' key pressed in window
-[DEBUG]: '(' key released in window
-[DEBUG]: 'S' key released in window
-[DEBUG]: '(' key pressed in window
-[DEBUG]: '(' key released in window
-[DEBUG]: 'D' key pressed in window
-[DEBUG]: 'D' key released in window
-[DEBUG]: 'W' key pressed in window
-[DEBUG]: 'W' key released in window
-[DEBUG]: 'S' key pressed in window
-[DEBUG]: 'S' key released in window
-[DEBUG]: '&' key pressed in window
-[DEBUG]: '&' key released in window
-[DEBUG]: 'W' key pressed in window
-[DEBUG]: 'W' key released in window
-[DEBUG]: '&' key pressed in window
-[DEBUG]: '&' key released in window
-[DEBUG]: '(' key pressed in window
-[DEBUG]: '(' key released in window
-[DEBUG]: 'S' key pressed in window
-[DEBUG]: 'S' key released in window
-[DEBUG]: '&' key pressed in window
-[DEBUG]: '&' key released in window
-[DEBUG]: 'S' key pressed in window
-[DEBUG]: 'S' key released in window
+[DEBUG]: 'E' key pressed in window.
+[DEBUG]: 'E' key released in window.
+[DEBUG]: 'F' key pressed in window.
+[DEBUG]: 'F' key released in window.
+[DEBUG]: 'S' key pressed in window.
+[DEBUG]: 'S' key released in window.
+[DEBUG]: 'S' key pressed in window.
+[DEBUG]: 'S' key released in window.
+[DEBUG]: Explicit - A key pressed!
+[DEBUG]: 'A' key released in window.
+[DEBUG]: 'W' key pressed in window.
+[DEBUG]: 'W' key released in window.
+[DEBUG]: 'W' key pressed in window.
+[DEBUG]: 'D' key pressed in window.
+[DEBUG]: 'W' key released in window.
+[DEBUG]: 'D' key released in window.
+[DEBUG]: 'W' key pressed in window.
+[DEBUG]: 'W' key released in window.
+[DEBUG]: Explicit - A key pressed!
+[DEBUG]: 'A' key released in window.
+[DEBUG]: 'W' key pressed in window.
+[DEBUG]: 'W' key released in window.
+[DEBUG]: 'S' key pressed in window.
+[DEBUG]: 'S' key released in window.
+[DEBUG]: '&' key pressed in window.
+[DEBUG]: '&' key released in window.
+[DEBUG]: 'S' key pressed in window.
+[DEBUG]: 'S' key released in window.
+[DEBUG]: '(' key pressed in window.
+[DEBUG]: '(' key released in window.
+[DEBUG]: 'W' key pressed in window.
+[DEBUG]: 'W' key released in window.
+[DEBUG]: '&' key pressed in window.
+[DEBUG]: '&' key released in window.
+[DEBUG]: 'W' key pressed in window.
+[DEBUG]: 'W' key released in window.
+[DEBUG]: '&' key pressed in window.
+[DEBUG]: '&' key released in window.
+[DEBUG]: '(' key pressed in window.
+[DEBUG]: '(' key released in window.
+[DEBUG]: 'W' key pressed in window.
+[DEBUG]: 'W' key released in window.
+[DEBUG]: 'S' key pressed in window.
+[DEBUG]: 'S' key released in window.
+[DEBUG]: 'W' key pressed in window.
+[DEBUG]: 'W' key released in window.
+[DEBUG]: '&' key pressed in window.
+[DEBUG]: '&' key released in window.
+[DEBUG]: 'W' key pressed in window.
+[DEBUG]: 'W' key released in window.
+[DEBUG]: 'S' key pressed in window.
+[DEBUG]: 'S' key released in window.
 [INFO]: Left alt pressed
-[DEBUG]: '¤' key pressed in window
+[DEBUG]: '¤' key pressed in window.
