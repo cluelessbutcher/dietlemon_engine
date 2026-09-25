@@ -3,7 +3,10 @@
 #include <core/logger.h>
 #include <core/dmemory.h>
 #include <core/input.h>
+#include <core/event.h>
+
 #include <math/dmath.h>
+
 #include <renderer/renderer_frontend.h>
 
 void recalculate_view_matrix(game_state* state) {
@@ -46,6 +49,12 @@ bool game_update(game* game_inst, float delta_time) {
   alloc_count = get_memory_alloc_count();
   if (input_is_key_up('M') && input_was_key_down('M')) {
     DDEBUG("Allocations: %llu (%llu this frame)", alloc_count, alloc_count - prev_alloc_count);
+  }
+  
+  if (input_is_key_up('T') && input_was_key_down('T')) {
+    DDEBUG("Swapping texture");
+    event_context context = {};
+    event_fire(EVENT_CODE_DEBUG0, game_inst, context);
   }
   
   game_state* state = (game_state*)game_inst->state;

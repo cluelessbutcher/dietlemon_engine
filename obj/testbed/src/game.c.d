@@ -20,7 +20,7 @@ obj/testbed/src/game.c.o: testbed/src/game.c testbed/src/game.h \
   engine/src/game_types.h engine/src/core/application.h \
   engine/src/math/math_types.h engine/src/core/logger.h \
   engine/src/core/dmemory.h engine/src/core/input.h \
-  engine/src/math/dmath.h /usr/include/string.h \
+  engine/src/core/event.h engine/src/math/dmath.h /usr/include/string.h \
   /usr/lib/llvm-21/lib/clang/21/include/stddef.h \
   /usr/lib/llvm-21/lib/clang/21/include/__stddef_size_t.h \
   /usr/lib/llvm-21/lib/clang/21/include/__stddef_null.h \

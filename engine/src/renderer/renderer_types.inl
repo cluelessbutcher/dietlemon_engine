@@ -32,7 +32,9 @@ typedef struct geometry_render_data {
 
 typedef struct renderer_backend {
   uint64_t frame_number;
-
+  
+  texture* default_diffuse;
+  
   bool (*initialize)(struct renderer_backend* backend, const char* application_name);
   void (*shutdown)(struct renderer_backend* backend);
   void (*resized)(struct renderer_backend* backend, uint16_t width, uint16_t height);

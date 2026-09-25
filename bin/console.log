@@ -20,57 +20,58 @@
 [DEBUG]: Vulkan surface created.
 [INFO]: linux_read_sorted_physical_devices:
 [INFO]:      Original order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)
-[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
-[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
+[INFO]:            [0] Intel(R) UHD Graphics 770 (ADL-S GT1)
+[INFO]:            [1] llvmpipe (LLVM 21.1.8, 256 bits)
+[INFO]:            [2] NVIDIA GeForce RTX 3060
 [INFO]:      Sorted order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)  
+[INFO]:            [0] NVIDIA GeForce RTX 3060  
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
 [INFO]: linux_read_sorted_physical_devices:
 [INFO]:      Original order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)
-[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
-[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
+[INFO]:            [0] Intel(R) UHD Graphics 770 (ADL-S GT1)
+[INFO]:            [1] llvmpipe (LLVM 21.1.8, 256 bits)
+[INFO]:            [2] NVIDIA GeForce RTX 3060
 [INFO]:      Sorted order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)  
+[INFO]:            [0] NVIDIA GeForce RTX 3060  
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
 [INFO]: linux_read_sorted_physical_devices:
 [INFO]:      Original order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)
-[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
-[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
+[INFO]:            [0] Intel(R) UHD Graphics 770 (ADL-S GT1)
+[INFO]:            [1] llvmpipe (LLVM 21.1.8, 256 bits)
+[INFO]:            [2] NVIDIA GeForce RTX 3060
 [INFO]:      Sorted order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)  
+[INFO]:            [0] NVIDIA GeForce RTX 3060  
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
 [INFO]: linux_read_sorted_physical_devices:
 [INFO]:      Original order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)
-[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
-[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
+[INFO]:            [0] Intel(R) UHD Graphics 770 (ADL-S GT1)
+[INFO]:            [1] llvmpipe (LLVM 21.1.8, 256 bits)
+[INFO]:            [2] NVIDIA GeForce RTX 3060
 [INFO]:      Sorted order:
-[INFO]:            [0] NVIDIA GeForce RTX 3060 (NVK GA106)  
+[INFO]:            [0] NVIDIA GeForce RTX 3060  
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
-[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_intel_hasvk.so due to not having any physical devices
 [INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_radeon.so due to not having any physical devices
-[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_asahi.so due to not having any physical devices
-[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_virtio.so due to not having any physical devices
 [INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_gfxstream.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_intel_hasvk.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_asahi.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_nouveau.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_virtio.so due to not having any physical devices
 [INFO]: Device is not a discrete GPU and one is required, skipping...
 [INFO]: Graphics | Present | Compute | Transfer | Name
-[INFO]:        1 |       1 |       1 |        1 | NVIDIA GeForce RTX 3060 (NVK GA106)
+[INFO]:        1 |       1 |       1 |        1 | NVIDIA GeForce RTX 3060
 [INFO]: Device meets queue requirements.
 [TRACE]: Graphics Family Index: 0
-[TRACE]: Present Family Index:  1
-[TRACE]: Transfer Family Index: 1
-[TRACE]: Compute Family Index:  0
-[INFO]: Selected device: 'NVIDIA GeForce RTX 3060 (NVK GA106)'.
+[TRACE]: Present Family Index:  2
+[TRACE]: Transfer Family Index: 5
+[TRACE]: Compute Family Index:  2
+[INFO]: Selected device: 'NVIDIA GeForce RTX 3060'.
 [INFO]: GPU type is Descrete.
-[INFO]: GPU Driver version: 26.0.8
-[INFO]: Vulkan API version: 1.4.335
+[INFO]: GPU Driver version: 595.364.448
+[INFO]: Vulkan API version: 1.4.329
 [INFO]: Local GPU memory: 12.00 Gib
 [INFO]: Shared System memory: 22.94 Gib
 [INFO]: Physical device selected
@@ -89,13 +90,12 @@
 [INFO]:            Library:  /usr/lib/x86_64-linux-gnu/libVkLayer_khronos_validation.so
 [INFO]:      ||
 [INFO]:    <Device>
-[INFO]:        Using "NVIDIA GeForce RTX 3060 (NVK GA106)" with driver: "/usr/lib/x86_64-linux-gnu/libvulkan_nouveau.so"
+[INFO]:        Using "NVIDIA GeForce RTX 3060" with driver: "/usr/lib/x86_64-linux-gnu/libGLX_nvidia.so.595.91.07"
 [INFO]: Logical device created
 [INFO]: Queues obtained.
 [INFO]: Graphics command pool created
 [INFO]: Swapchain created successfully.
 [DEBUG]: Vulkan command buffers created.
-[WARN]: vkCreateGraphicsPipelines(): pCreateInfos[0].pVertexInputState Vertex attribute at location 1 not consumed by vertex shader.
 [DEBUG]: Graphics pipeline created!
 [INFO]: Vulkan renderer initialized successfully.
 [TRACE]: Creating default texture...
@@ -104,16 +104,16 @@
     UNKNOWN          : 0.00B
     ARRAY            : 0.00B
     LINEAR_ALLOCATOR : 0.00B
-    DARRAY           : 3.84Kib
+    DARRAY           : 4.80Kib
     DICT             : 0.00B
     RING QUEUE       : 0.00B
     BST              : 0.00B
-    STRING           : 1.80Kib
+    STRING           : 2.90Kib
     APPLICATION      : 0.00B
     JOB              : 0.00B
     TEXTURE          : 40.00B
     MATERIAL INSTANCE: 0.00B
-    RENDERER         : 160.00B
+    RENDERER         : 124.00B
     GAME             : 0.00B
     TRANSFORM        : 0.00B
     ENTITY           : 0.00B
@@ -123,60 +123,19 @@
 [INFO]: Vulkan renderer backend->resized: w/h/gen: 1280/720/1
 [INFO]: Swapchain created successfully.
 [DEBUG]: Vulkan command buffers created.
-[WARN]: vkCreateGraphicsPipelines(): pCreateInfos[0].pVertexInputState Vertex attribute at location 1 not consumed by vertex shader.
 [DEBUG]: Graphics pipeline created!
 [INFO]: Resized, booting.
-[DEBUG]: 'E' key pressed in window.
-[DEBUG]: 'E' key released in window.
-[DEBUG]: 'F' key pressed in window.
-[DEBUG]: 'F' key released in window.
-[DEBUG]: 'S' key pressed in window.
-[DEBUG]: 'S' key released in window.
-[DEBUG]: 'S' key pressed in window.
-[DEBUG]: 'S' key released in window.
-[DEBUG]: Explicit - A key pressed!
-[DEBUG]: 'A' key released in window.
-[DEBUG]: 'W' key pressed in window.
-[DEBUG]: 'W' key released in window.
-[DEBUG]: 'W' key pressed in window.
-[DEBUG]: 'D' key pressed in window.
-[DEBUG]: 'W' key released in window.
-[DEBUG]: 'D' key released in window.
-[DEBUG]: 'W' key pressed in window.
-[DEBUG]: 'W' key released in window.
-[DEBUG]: Explicit - A key pressed!
-[DEBUG]: 'A' key released in window.
-[DEBUG]: 'W' key pressed in window.
-[DEBUG]: 'W' key released in window.
-[DEBUG]: 'S' key pressed in window.
-[DEBUG]: 'S' key released in window.
-[DEBUG]: '&' key pressed in window.
-[DEBUG]: '&' key released in window.
-[DEBUG]: 'S' key pressed in window.
-[DEBUG]: 'S' key released in window.
-[DEBUG]: '(' key pressed in window.
-[DEBUG]: '(' key released in window.
-[DEBUG]: 'W' key pressed in window.
-[DEBUG]: 'W' key released in window.
-[DEBUG]: '&' key pressed in window.
-[DEBUG]: '&' key released in window.
-[DEBUG]: 'W' key pressed in window.
-[DEBUG]: 'W' key released in window.
-[DEBUG]: '&' key pressed in window.
-[DEBUG]: '&' key released in window.
-[DEBUG]: '(' key pressed in window.
-[DEBUG]: '(' key released in window.
-[DEBUG]: 'W' key pressed in window.
-[DEBUG]: 'W' key released in window.
-[DEBUG]: 'S' key pressed in window.
-[DEBUG]: 'S' key released in window.
-[DEBUG]: 'W' key pressed in window.
-[DEBUG]: 'W' key released in window.
-[DEBUG]: '&' key pressed in window.
-[DEBUG]: '&' key released in window.
-[DEBUG]: 'W' key pressed in window.
-[DEBUG]: 'W' key released in window.
-[DEBUG]: 'S' key pressed in window.
-[DEBUG]: 'S' key released in window.
+[DEBUG]: 'T' key pressed in window.
+[DEBUG]: 'T' key released in window.
+[DEBUG]: Swapping texture
+[DEBUG]: 'T' key pressed in window.
+[DEBUG]: 'T' key released in window.
+[DEBUG]: Swapping texture
+[DEBUG]: 'T' key pressed in window.
+[DEBUG]: 'T' key released in window.
+[DEBUG]: Swapping texture
+[DEBUG]: 'T' key pressed in window.
+[DEBUG]: 'T' key released in window.
+[DEBUG]: Swapping texture
 [INFO]: Left alt pressed
 [DEBUG]: '¤' key pressed in window.

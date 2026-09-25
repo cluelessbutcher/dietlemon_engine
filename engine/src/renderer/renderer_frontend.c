@@ -1,9 +1,18 @@
 #include "renderer_frontend.h"
 #include "renderer_backend.h"
+
 #include "core/logger.h"
 #include "core/dmemory.h"
+#include "core/dstring.h"
+#include "core/event.h"
+
 #include "math/dmath.h"
+
 #include "resources/resource_types.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "vendor/stb_image.h"
+
 #include <string.h>
 
 typedef struct renderer_system_state {
@@ -13,9 +22,87 @@ typedef struct renderer_system_state {
   float near_clip;
   float far_clip;
   texture default_texture;
+  texture test_diffuse;
 } renderer_system_state;
 
 static renderer_system_state* state_ptr;
+
+void create_texture(texture* t) {
+  memset(t, 0, sizeof(texture));
+  t->generation = INVALID_ID;
+}
+
+bool load_texture(const char* texture_name, texture* t) {
+  char* format_str = "assets/textures/%s.%s";
+  const int32_t required_channel_count = 4;
+  stbi_set_flip_vertically_on_load(true);
+  char full_file_path[512];
+  
+  string_format(full_file_path, format_str, texture_name, "png");
+  
+  texture temp_texture;
+  
+  uint8_t* data = stbi_load(full_file_path,
+                            (int32_t*)&temp_texture.width,
+                            (int32_t*)&temp_texture.height,
+                            (int32_t*)&temp_texture.channel_count,
+                            required_channel_count);
+  
+  temp_texture.channel_count = required_channel_count;
+  
+  if (data) {
+    uint32_t current_generation = t->generation;
+    t->generation = INVALID_ID;
+    
+    uint64_t total_size = temp_texture.width * temp_texture.height * required_channel_count;
+    int has_transparency = false;
+    for (uint64_t i = 0; i < total_size; i += required_channel_count) {
+      uint8_t a = data[i + 3];
+      if (a < 255) {
+        has_transparency = true;
+        break;
+      }
+    }
+    
+    if (stbi_failure_reason()) {
+      DWARN("load_texture() failed to load file '%s': %s", full_file_path, stbi_failure_reason());
+    }
+    
+    renderer_create_texture(texture_name, true, temp_texture.width, temp_texture.height, temp_texture.channel_count, data, has_transparency, &temp_texture);
+    texture old = *t;
+    *t = temp_texture;
+    renderer_destroy_texture(&old);
+    
+    if (current_generation == INVALID_ID) {
+      t->generation = 0;
+    } else {
+      t->generation = current_generation + 1;
+    }
+    
+    stbi_image_free(data);
+    return true;
+  } else {
+    if (stbi_failure_reason()) {
+      DWARN("load_texture() failed to load file '%s': %s", full_file_path, stbi_failure_reason());
+    }
+    
+    return false;
+  }
+}
+
+bool event_on_debug_event(uint16_t code, void* sender, void* listener_inst, event_context data) {
+  const char* names[3] = {
+    "cobblestone",
+    "paving",
+    "paving2"
+  };
+  static int8_t choice = 2;
+  choice++;
+  choice %= 3;
+  
+  load_texture(names[choice], &state_ptr->test_diffuse);
+  return true;
+}
 
 bool renderer_system_initialize(uint64_t* memory_requirement, void* state, const char* application_name) {
   *memory_requirement = sizeof(renderer_system_state);
@@ -24,6 +111,9 @@ bool renderer_system_initialize(uint64_t* memory_requirement, void* state, const
   }
   state_ptr = state;
 
+  event_register(EVENT_CODE_DEBUG0, state_ptr, event_on_debug_event);
+  state_ptr->backend.default_diffuse = &state_ptr->default_texture;
+  
   renderer_backend_create(RENDERER_BACKEND_TYPE_VULKAN, &state_ptr->backend);
   state_ptr->backend.frame_number = 0;
 
@@ -73,12 +163,17 @@ bool renderer_system_initialize(uint64_t* memory_requirement, void* state, const
                           false,
                           &state_ptr->default_texture);
 
+  state_ptr->default_texture.generation = INVALID_ID;
+  create_texture(&state_ptr->test_diffuse);
+  
   return true;
 }
 
 void renderer_system_shutdown(void* state) {
   if (state_ptr) {
+    event_unregister(EVENT_CODE_DEBUG0, state_ptr, event_on_debug_event);
     renderer_destroy_texture(&state_ptr->default_texture);
+    renderer_destroy_texture(&state_ptr->test_diffuse);
     state_ptr->backend.shutdown(&state_ptr->backend);
   }
   state_ptr = 0;
@@ -118,7 +213,7 @@ bool renderer_draw_frame(render_packet* packet) {
     geometry_render_data data = {};
     data.object_id = 0;
     data.model = model;
-    data.textures[0] = &state_ptr->default_texture;
+    data.textures[0] = &state_ptr->test_diffuse;
     state_ptr->backend.update_object(data);
 
     bool result = renderer_end_frame(packet->delta_time);
