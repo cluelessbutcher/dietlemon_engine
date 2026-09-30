@@ -15,7 +15,7 @@
     return false;                                                       \
   }                                                                     \
   
-#define expect_flaot_should_be(expected, actual)                        \
+#define expect_float_to_be(expected, actual)                        \
   if (dabs(expected - actual) > 0.001f) {                               \
     DERROR("--> Expected %f, but got %f. File: %s.%d", expected, actual, __FILE__, __LINE__); \
     return false;                                                       \

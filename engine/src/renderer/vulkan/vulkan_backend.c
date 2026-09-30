@@ -17,7 +17,7 @@
 #include "containers/darray.h"
 #include "math/math_types.h"
 #include "platform/platform.h"
-#include "shaders/vulkan_object_shader.h"
+#include "shaders/vulkan_material_shader.h"
 
 #include <string.h>
 
@@ -40,7 +40,7 @@ void create_sync_objects(void);
 void destroy_sync_objects(void);
 
 void upload_data_range(vulkan_context* context, VkCommandPool pool, VkFence fence, VkQueue queue, vulkan_buffer* buffer, uint64_t offset, uint64_t size, void* data) {
-  VkBufferUsageFlags flags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+  VkMemoryPropertyFlags flags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
   vulkan_buffer staging;
   vulkan_buffer_create(context, size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, flags, true, &staging);
   vulkan_buffer_load_data(context, &staging, 0, size, 0, data);
@@ -222,7 +222,7 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
   create_command_buffers(backend);
   create_sync_objects();
 
-  if (!vulkan_object_shader_create(&context, backend->default_diffuse, &context.object_shader)) {
+  if (!vulkan_material_shader_create(&context, &context.material_shader)) {
     DERROR("Error loading built-in object shader.");
     return false;
   }
@@ -260,7 +260,7 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
   upload_data_range(&context, context.device.graphics_command_pool, 0, context.device.graphics_queue, &context.object_index_buffer, 0, sizeof(uint32_t) * 6, indices);
 
   uint32_t object_id = 0;
-  if (!vulkan_object_shader_acquire_resources(&context, &context.object_shader, &object_id)) {
+  if (!vulkan_material_shader_acquire_resources(&context, &context.material_shader, &object_id)) {
     DERROR("Failed to acquire shader resources.");
     return false;
   }
@@ -275,7 +275,7 @@ void vulkan_renderer_backend_shutdown(renderer_backend* backend) {
   vulkan_buffer_destroy(&context, &context.object_vertex_buffer);
   vulkan_buffer_destroy(&context, &context.object_index_buffer);
 
-  vulkan_object_shader_destroy(&context, &context.object_shader);
+  vulkan_material_shader_destroy(&context, &context.material_shader);
 
   destroy_sync_objects();
 
@@ -411,12 +411,12 @@ bool vulkan_renderer_backend_begin_frame(renderer_backend* backend, float delta_
 }
 
 void vulkan_renderer_update_global_state(mat4 projection, mat4 view, vec3 view_position, vec4 ambient_color, int32_t mode) {
-  vulkan_object_shader_use(&context, &context.object_shader);
+  vulkan_material_shader_use(&context, &context.material_shader);
 
-  context.object_shader.global_ubo.projection = projection;
-  context.object_shader.global_ubo.view = view;
+  context.material_shader.global_ubo.projection = projection;
+  context.material_shader.global_ubo.view = view;
 
-  vulkan_object_shader_update_global_state(&context, &context.object_shader, context.frame_delta_time);
+  vulkan_material_shader_update_global_state(&context, &context.material_shader, context.frame_delta_time);
 }
 
 bool vulkan_renderer_backend_end_frame(renderer_backend* backend, float delta_time) {
@@ -468,8 +468,8 @@ bool vulkan_renderer_backend_end_frame(renderer_backend* backend, float delta_ti
 void vulkan_backend_update_object(geometry_render_data data) {
   vulkan_command_buffer* command_buffer = &context.graphics_command_buffers[context.image_index];
 
-  vulkan_object_shader_update_object(&context, &context.object_shader, data);
-  vulkan_object_shader_use(&context, &context.object_shader);
+  vulkan_material_shader_update_object(&context, &context.material_shader, data);
+  vulkan_material_shader_use(&context, &context.material_shader);
 
   VkDeviceSize offsets[1] = {0};
   vkCmdBindVertexBuffers(command_buffer->handle, 0, 1, &context.object_vertex_buffer.handle, (VkDeviceSize*)offsets);
@@ -612,15 +612,15 @@ bool recreate_swapchain(renderer_backend* backend) {
   create_command_buffers(backend);
   create_sync_objects();
 
-  vulkan_object_shader_destroy(&context, &context.object_shader);
-  if (!vulkan_object_shader_create(&context, backend->default_diffuse, &context.object_shader)) {
+  vulkan_material_shader_destroy(&context, &context.material_shader);
+  if (!vulkan_material_shader_create(&context, &context.material_shader)) {
     DERROR("Failed to recreate object shader after swapchain recreate");
     context.recreating_swapchain = false;
     return false;
   }
 
   uint32_t object_id = 0;
-  if (!vulkan_object_shader_acquire_resources(&context, &context.object_shader, &object_id)) {
+  if (!vulkan_material_shader_acquire_resources(&context, &context.material_shader, &object_id)) {
     DERROR("Failed to re-acquire shader resources after swapchain recreate");
     context.recreating_swapchain = false;
     return false;
@@ -662,7 +662,7 @@ bool create_buffers(vulkan_context* context) {
   return true;
 }
 
-void vulkan_renderer_create_texture(const char* name, bool auto_release, int32_t width, int32_t height, int32_t channel_count, const uint8_t* pixels, bool has_transparency, texture* out_texture) {
+void vulkan_renderer_create_texture(const char* name, int32_t width, int32_t height, int32_t channel_count, const uint8_t* pixels, bool has_transparency, texture* out_texture) {
   out_texture->width = width;
   out_texture->height = height;
   out_texture->channel_count = channel_count;
@@ -719,7 +719,7 @@ void vulkan_renderer_create_texture(const char* name, bool auto_release, int32_t
                                  VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 
   vulkan_command_buffer_end_single_use(&context, pool, &temp_buffer, queue);
-    
+
   vulkan_buffer_destroy(&context, &staging);
 
   VkSamplerCreateInfo sampler_info = {VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO};
@@ -761,6 +761,6 @@ void vulkan_renderer_destroy_texture(struct texture* texture) {
     data->sampler = 0;
     dfree(texture->internal_data, sizeof(vulkan_texture_data), MEMORY_TAG_TEXTURE);
   }
-  
+
   memset(texture, 0, sizeof(struct texture));
 }

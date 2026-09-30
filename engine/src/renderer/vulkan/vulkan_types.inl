@@ -130,6 +130,7 @@ typedef struct vulkan_pipeline {
 
 typedef struct vulkan_descriptor_state {
   uint32_t generations[3];
+  uint32_t ids[3];
 } vulkan_descriptor_state;
 
 #define VULKAN_OBJECT_SHADER_DESCRIPTOR_COUNT 2
@@ -141,7 +142,7 @@ typedef struct vulkan_object_shader_object_state {
 
 #define VULKAN_OBJECT_MAX_OBJECT_COUNT 1024
 
-typedef struct vulkan_object_shader {
+typedef struct vulkan_material_shader {
   vulkan_shader_stage stages[OBJECT_SHADER_STAGE_COUNT];
   VkDescriptorPool global_descriptor_pool;
   VkDescriptorSetLayout global_descriptor_set_layout;
@@ -153,9 +154,8 @@ typedef struct vulkan_object_shader {
   vulkan_buffer object_uniform_buffer;
   uint32_t object_uniform_buffer_index;
   vulkan_object_shader_object_state object_states[VULKAN_OBJECT_MAX_OBJECT_COUNT];
-  texture* default_diffuse;
   vulkan_pipeline pipeline;
-} vulkan_object_shader;
+} vulkan_material_shader;
 
 typedef struct vulkan_context {
   float frame_delta_time;
@@ -190,7 +190,7 @@ typedef struct vulkan_context {
   uint32_t image_index;
   uint32_t current_frame;
   bool recreating_swapchain;
-  vulkan_object_shader object_shader;
+  vulkan_material_shader material_shader;
   
   uint64_t geometry_vertex_offset;
   uint64_t geometry_index_offset;

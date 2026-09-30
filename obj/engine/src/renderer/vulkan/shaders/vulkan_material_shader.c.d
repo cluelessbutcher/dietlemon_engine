@@ -1,6 +1,6 @@
-obj/engine/src/renderer/vulkan/shaders/vulkan_object_shader.c.o: \
-  engine/src/renderer/vulkan/shaders/vulkan_object_shader.c \
-  engine/src/renderer/vulkan/shaders/vulkan_object_shader.h \
+obj/engine/src/renderer/vulkan/shaders/vulkan_material_shader.c.o: \
+  engine/src/renderer/vulkan/shaders/vulkan_material_shader.c \
+  engine/src/renderer/vulkan/shaders/vulkan_material_shader.h \
   engine/src/renderer/vulkan/vulkan_types.inl engine/src/defines.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdint.h /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -50,4 +50,5 @@ obj/engine/src/renderer/vulkan/shaders/vulkan_object_shader.c.o: \
   /usr/include/strings.h \
   engine/src/renderer/vulkan/vulkan_shader_utils.h \
   engine/src/renderer/vulkan/vulkan_pipeline.h \
-  engine/src/renderer/vulkan/vulkan_buffer.h
+  engine/src/renderer/vulkan/vulkan_buffer.h \
+  engine/src/systems/texture_system.h

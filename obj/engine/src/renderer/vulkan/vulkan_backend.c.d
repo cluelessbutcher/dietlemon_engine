@@ -56,7 +56,7 @@ obj/engine/src/renderer/vulkan/vulkan_backend.c.o: \
   engine/src/renderer/vulkan/vulkan_image.h engine/src/core/logger.h \
   engine/src/core/dmemory.h engine/src/core/application.h \
   engine/src/containers/darray.h engine/src/platform/platform.h \
-  engine/src/renderer/vulkan/shaders/vulkan_object_shader.h \
+  engine/src/renderer/vulkan/shaders/vulkan_material_shader.h \
   /usr/include/string.h \
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \

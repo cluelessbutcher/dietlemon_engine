@@ -20,45 +20,45 @@
 [DEBUG]: Vulkan surface created.
 [INFO]: linux_read_sorted_physical_devices:
 [INFO]:      Original order:
-[INFO]:            [0] Intel(R) UHD Graphics 770 (ADL-S GT1)
-[INFO]:            [1] llvmpipe (LLVM 21.1.8, 256 bits)
-[INFO]:            [2] NVIDIA GeForce RTX 3060
+[INFO]:            [0] NVIDIA GeForce RTX 3060
+[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
+[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
 [INFO]:      Sorted order:
 [INFO]:            [0] NVIDIA GeForce RTX 3060  
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
 [INFO]: linux_read_sorted_physical_devices:
 [INFO]:      Original order:
-[INFO]:            [0] Intel(R) UHD Graphics 770 (ADL-S GT1)
-[INFO]:            [1] llvmpipe (LLVM 21.1.8, 256 bits)
-[INFO]:            [2] NVIDIA GeForce RTX 3060
+[INFO]:            [0] NVIDIA GeForce RTX 3060
+[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
+[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
 [INFO]:      Sorted order:
 [INFO]:            [0] NVIDIA GeForce RTX 3060  
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
 [INFO]: linux_read_sorted_physical_devices:
 [INFO]:      Original order:
-[INFO]:            [0] Intel(R) UHD Graphics 770 (ADL-S GT1)
-[INFO]:            [1] llvmpipe (LLVM 21.1.8, 256 bits)
-[INFO]:            [2] NVIDIA GeForce RTX 3060
+[INFO]:            [0] NVIDIA GeForce RTX 3060
+[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
+[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
 [INFO]:      Sorted order:
 [INFO]:            [0] NVIDIA GeForce RTX 3060  
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
 [INFO]: linux_read_sorted_physical_devices:
 [INFO]:      Original order:
-[INFO]:            [0] Intel(R) UHD Graphics 770 (ADL-S GT1)
-[INFO]:            [1] llvmpipe (LLVM 21.1.8, 256 bits)
-[INFO]:            [2] NVIDIA GeForce RTX 3060
+[INFO]:            [0] NVIDIA GeForce RTX 3060
+[INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)
+[INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)
 [INFO]:      Sorted order:
 [INFO]:            [0] NVIDIA GeForce RTX 3060  
 [INFO]:            [1] Intel(R) UHD Graphics 770 (ADL-S GT1)  
 [INFO]:            [2] llvmpipe (LLVM 21.1.8, 256 bits)  
-[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_radeon.so due to not having any physical devices
 [INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_gfxstream.so due to not having any physical devices
-[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_intel_hasvk.so due to not having any physical devices
-[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_asahi.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_radeon.so due to not having any physical devices
 [INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_nouveau.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_asahi.so due to not having any physical devices
+[INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_intel_hasvk.so due to not having any physical devices
 [INFO]: Removing driver /usr/lib/x86_64-linux-gnu/libvulkan_virtio.so due to not having any physical devices
 [INFO]: Device is not a discrete GPU and one is required, skipping...
 [INFO]: Graphics | Present | Compute | Transfer | Name
@@ -91,6 +91,7 @@
 [INFO]:      ||
 [INFO]:    <Device>
 [INFO]:        Using "NVIDIA GeForce RTX 3060" with driver: "/usr/lib/x86_64-linux-gnu/libGLX_nvidia.so.595.91.07"
+[INFO]: vkCreateDevice(): Cannot open shader validation cache at /home/sorena/.cache/shader_validation_cache-1000.bin for reading (it may not exist yet)
 [INFO]: Logical device created
 [INFO]: Queues obtained.
 [INFO]: Graphics command pool created
@@ -98,7 +99,7 @@
 [DEBUG]: Vulkan command buffers created.
 [DEBUG]: Graphics pipeline created!
 [INFO]: Vulkan renderer initialized successfully.
-[TRACE]: Creating default texture...
+[TRACE]: creating default texture...
 [DEBUG]: game_initialize() called
 [INFO]: System memory use(tagged)
     UNKNOWN          : 0.00B
@@ -128,14 +129,54 @@
 [DEBUG]: 'T' key pressed in window.
 [DEBUG]: 'T' key released in window.
 [DEBUG]: Swapping texture
+[TRACE]: Texture 'cobblestone' does not yet exist; created, and ref_count is now 1
+[WARN]: Tried to release non-existant texture: 'paving2'
+[DEBUG]: 'W' key pressed in window.
+[DEBUG]: 'W' key released in window.
+[DEBUG]: 'D' key pressed in window.
+[DEBUG]: 'D' key released in window.
+[DEBUG]: Explicit - A key pressed!
+[DEBUG]: 'A' key released in window.
+[DEBUG]: 'D' key pressed in window.
+[DEBUG]: 'D' key released in window.
+[DEBUG]: '%' key pressed in window.
+[DEBUG]: 'D' key pressed in window.
+[DEBUG]: '%' key released in window.
+[DEBUG]: '%' key pressed in window.
+[DEBUG]: 'D' key released in window.
+[DEBUG]: '%' key released in window.
+[DEBUG]: Explicit - A key pressed!
+[DEBUG]: 'A' key released in window.
+[DEBUG]: 'W' key pressed in window.
+[DEBUG]: 'W' key released in window.
+[DEBUG]: Explicit - A key pressed!
+[DEBUG]: 'A' key released in window.
+[DEBUG]: ''' key pressed in window.
+[DEBUG]: ''' key released in window.
+[DEBUG]: 'S' key pressed in window.
+[DEBUG]: 'S' key released in window.
+[DEBUG]: 'T' key pressed in window.
+[DEBUG]: 'R' key pressed in window.
+[DEBUG]: 'T' key released in window.
+[DEBUG]: 'R' key released in window.
+[DEBUG]: Swapping texture
+[TRACE]: Texture 'paving' does not yet exist; created, and ref_count is now 1
+[TRACE]: Released texture 'cobblestone', texture unloaded because reference count = 0 and auto_release = true
 [DEBUG]: 'T' key pressed in window.
 [DEBUG]: 'T' key released in window.
 [DEBUG]: Swapping texture
+[TRACE]: Texture 'paving2' does not yet exist; created, and ref_count is now 1
+[TRACE]: Released texture 'paving', texture unloaded because reference count = 0 and auto_release = true
+[DEBUG]: '%' key pressed in window.
+[DEBUG]: '%' key released in window.
 [DEBUG]: 'T' key pressed in window.
 [DEBUG]: 'T' key released in window.
 [DEBUG]: Swapping texture
-[DEBUG]: 'T' key pressed in window.
-[DEBUG]: 'T' key released in window.
-[DEBUG]: Swapping texture
+[TRACE]: Texture 'cobblestone' does not yet exist; created, and ref_count is now 1
+[TRACE]: Released texture 'paving2', texture unloaded because reference count = 0 and auto_release = true
+[DEBUG]: 'D' key pressed in window.
+[DEBUG]: 'D' key released in window.
+[DEBUG]: '
+[DEBUG]: '
 [INFO]: Left alt pressed
 [DEBUG]: '¤' key pressed in window.

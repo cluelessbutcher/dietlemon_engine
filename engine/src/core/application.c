@@ -9,34 +9,38 @@
 #include "core/clock.h"
 #include "memory/linear_allocator.h"
 #include "renderer/renderer_frontend.h"
+#include "systems/texture_system.h"
 
 typedef struct application_state {
-    game* game_inst;
-    bool is_running;
-    bool is_suspended;
-    int16_t width;
-    int16_t height;
-    clock clock;
-    double last_time;
-    linear_allocator systems_allocator;
+  game* game_inst;
+  bool is_running;
+  bool is_suspended;
+  int16_t width;
+  int16_t height;
+  clock clock;
+  double last_time;
+  linear_allocator systems_allocator;
 
-    uint64_t event_system_memory_requirement;
-    void* event_system_state;
+  uint64_t event_system_memory_requirement;
+  void* event_system_state;
 
-    uint64_t memory_system_memory_requirement;
-    void* memory_system_state;
+  uint64_t memory_system_memory_requirement;
+  void* memory_system_state;
 
-    uint64_t logging_system_memory_requirement;
-    void* logging_system_state;
+  uint64_t logging_system_memory_requirement;
+  void* logging_system_state;
 
-    uint64_t input_system_memory_requirement;
-    void* input_system_state;
+  uint64_t input_system_memory_requirement;
+  void* input_system_state;
 
-    uint64_t platform_system_memory_requirement;
-    void* platform_system_state;
+  uint64_t platform_system_memory_requirement;
+  void* platform_system_state;
 
-    uint64_t renderer_system_memory_requirement;
-    void* renderer_system_state;
+  uint64_t renderer_system_memory_requirement;
+  void* renderer_system_state;
+  
+  uint64_t texture_system_memory_requirement;
+  void* texture_system_state;
 } application_state;
 
 static application_state* app_state;
@@ -104,9 +108,18 @@ bool application_create(game* game_inst) {
         return false;
     }
 
+    texture_system_config texture_sys_config;
+    texture_sys_config.max_texture_count = 65536;
+    texture_system_initialize(&app_state->texture_system_memory_requirement, 0, texture_sys_config);
+    app_state->texture_system_state = linear_allocator_allocate(&app_state->systems_allocator, app_state->texture_system_memory_requirement);
+    if (!texture_system_initialize(&app_state->texture_system_memory_requirement, app_state->texture_system_state, texture_sys_config)) {
+      DFATAL("Failed to initialize texture system so the applicatoin cannot continue");
+      return false;
+    }
+    
     if (!app_state->game_inst->initialize(app_state->game_inst)) {
-        DFATAL("Game failed to initialize.");
-        return false;
+      DFATAL("Game failed to initialize.");
+      return false;
     }
 
     app_state->game_inst->on_resize(app_state->game_inst, app_state->width, app_state->height);
@@ -178,6 +191,7 @@ bool application_run() {
     event_unregister(EVENT_CODE_KEY_RELEASED, 0, application_on_key);
 
     input_system_shutdown(app_state->input_system_state);
+    texture_system_shutdown(app_state->texture_system_state);
     renderer_system_shutdown(app_state->renderer_system_state);
     platform_system_shutdown(app_state->platform_system_state);
     memory_system_shutdown(app_state->memory_system_state);

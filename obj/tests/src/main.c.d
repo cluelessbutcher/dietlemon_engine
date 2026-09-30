@@ -17,4 +17,5 @@ obj/tests/src/main.c.o: tests/src/main.c tests/src/test_manager.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/lib/llvm-21/lib/clang/21/include/stdbool.h \
-  tests/src/memory/linear_allocator_tests.h engine/src/core/logger.h
+  tests/src/memory/linear_allocator_tests.h \
+  tests/src/containers/hashtable_tests.h engine/src/core/logger.h
