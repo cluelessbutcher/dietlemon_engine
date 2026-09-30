@@ -17,17 +17,17 @@ typedef struct global_uniform_object {
   mat4 m_reserved1;
 } global_uniform_object;
 
-typedef struct object_uniform_object {
+typedef struct material_uniform_object {
   vec4 diffuse_color;
   vec4 v_reserved0;
   vec4 v_reserved1;
   vec4 v_reserved2;
-} object_uniform_object;
+} material_uniform_object;
 
 typedef struct geometry_render_data {
   uint32_t object_id;
   mat4 model;
-  texture* textures[16];
+  material* material;
 } geometry_render_data;
 
 typedef struct renderer_backend {
@@ -40,15 +40,10 @@ typedef struct renderer_backend {
   void (*update_global_state)(mat4 projection, mat4 view, vec3 view_position, vec4 ambient_color, int32_t mode);
   bool (*end_frame)(struct renderer_backend* backend, float delta_time);
   void (*update_object)(geometry_render_data data);
-  void (*create_texture)(
-                         const char* name,
-			 int32_t width,
-                         int32_t height,
-                         int32_t channel_count,
-                         const uint8_t* pixels,
-                         bool has_transparency,
-                         struct texture* out_texture);
+  void (*create_texture)(const uint8_t* pixels, struct texture* out_texture);
   void (*destroy_texture)(struct texture* texture);
+  bool (*create_material)(struct material* material);
+  void (*destroy_material)(struct material* material);
 } renderer_backend;
 
 typedef struct render_packet {

@@ -30,6 +30,7 @@ static texture_system_state* state_ptr = 0;
 bool create_default_textures(texture_system_state* state);
 void destroy_default_textures(texture_system_state* state);
 bool load_texture(const char* texture_name, texture* t);
+void destroy_texture(texture* t);
 
 bool texture_system_initialize(uint64_t* memory_requirement, void* state, texture_system_config config) {
   if (config.max_texture_count == 0) {
@@ -146,21 +147,22 @@ void texture_system_release(const char* name) {
       DWARN("Tried to release non-existant texture: '%s'", name);
       return;
     }
+
+    char name_copy[TEXTURE_NAME_MAX_LENGTH];
+    strncpy(name_copy, name, TEXTURE_NAME_MAX_LENGTH);
+
     ref.reference_count--;
     if (ref.reference_count == 0 && ref.auto_release) {
       texture* t = &state_ptr->registered_textures[ref.handle];
-      renderer_destroy_texture(t);
-      memset(t, 0, sizeof(texture));
-      t->id = INVALID_ID;
-      t->generation = INVALID_ID;
+      destroy_texture(t);
       ref.handle = INVALID_ID;
       ref.auto_release = false;
-      DTRACE("Released texture '%s', texture unloaded because reference count = 0 and auto_release = true", name);
+      DTRACE("Released texture '%s', texture unloaded because reference count = 0 and auto_release = true", name_copy);
     } else {
-      DTRACE("Released texture '%s', now has a reference count of '%i' (auto_release=%s)", name, ref.reference_count, ref.auto_release ? "true" : "false");
+      DTRACE("Released texture '%s', now has a reference count of '%i' (auto_release=%s)", name_copy, ref.reference_count, ref.auto_release ? "true" : "false");
     }
 
-    hashtable_set(&state_ptr->registered_texture_table, name, &ref);
+    hashtable_set(&state_ptr->registered_texture_table, name_copy, &ref);
   } else {
     DERROR("texture_system_release failed to release texture '%s'", name);
   }
@@ -201,14 +203,19 @@ bool create_default_textures(texture_system_state* state) {
     }
   }
 
-  renderer_create_texture(DEFAULT_TEXTURE_NAME, tex_dimension, tex_dimension, 4, pixels, false, &state->default_texture);
+  strncpy(state->default_texture.name, DEFAULT_TEXTURE_NAME, TEXTURE_NAME_MAX_LENGTH);
+  state->default_texture.width = tex_dimension;
+  state->default_texture.height = tex_dimension;
+  state->default_texture.channel_count = 4;
+  state->default_texture.has_transparency = false;
+  renderer_create_texture(pixels, &state->default_texture);
   state->default_texture.generation = INVALID_ID;
   return true;
 }
 
 void destroy_default_textures(texture_system_state* state) {
   if (state) {
-    renderer_destroy_texture(&state->default_texture);
+    destroy_texture(&state->default_texture);
   }
 }
 
@@ -240,9 +247,15 @@ bool load_texture(const char* texture_name, texture* t) {
 
     if (stbi_failure_reason()) {
       DWARN("load_texture() failed to load file '%s': %s", full_file_path, stbi_failure_reason());
+      stbi__err(0, 0);
+      return false;
     }
 
-    renderer_create_texture(texture_name, temp_texture.width, temp_texture.height, temp_texture.channel_count, data, has_transparency, &temp_texture);
+    strncpy(temp_texture.name, texture_name, TEXTURE_NAME_MAX_LENGTH);
+    temp_texture.generation = INVALID_ID;
+    temp_texture.has_transparency = has_transparency;
+    renderer_create_texture(data, &temp_texture);
+
     texture old = *t;
     *t = temp_texture;
     renderer_destroy_texture(&old);
@@ -258,8 +271,17 @@ bool load_texture(const char* texture_name, texture* t) {
   } else {
     if (stbi_failure_reason()) {
       DWARN("load_texture() failed to load file '%s': %s", full_file_path, stbi_failure_reason());
+      stbi__err(0, 0);
     }
 
     return false;
   }
+}
+
+void destroy_texture(texture* t) {
+  renderer_destroy_texture(t);
+  memset(t->name, 0, sizeof(char) * TEXTURE_NAME_MAX_LENGTH);
+  memset(t, 0, sizeof(texture));
+  t->id = INVALID_ID;
+  t->generation = INVALID_ID;
 }

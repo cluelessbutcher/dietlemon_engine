@@ -259,12 +259,6 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
   upload_data_range(&context, context.device.graphics_command_pool, 0, context.device.graphics_queue, &context.object_vertex_buffer, 0, sizeof(vertex_3d) * vert_count, verts);
   upload_data_range(&context, context.device.graphics_command_pool, 0, context.device.graphics_queue, &context.object_index_buffer, 0, sizeof(uint32_t) * 6, indices);
 
-  uint32_t object_id = 0;
-  if (!vulkan_material_shader_acquire_resources(&context, &context.material_shader, &object_id)) {
-    DERROR("Failed to acquire shader resources.");
-    return false;
-  }
-
   DINFO("Vulkan renderer initialized successfully.");
   return true;
 }
@@ -612,20 +606,6 @@ bool recreate_swapchain(renderer_backend* backend) {
   create_command_buffers(backend);
   create_sync_objects();
 
-  vulkan_material_shader_destroy(&context, &context.material_shader);
-  if (!vulkan_material_shader_create(&context, &context.material_shader)) {
-    DERROR("Failed to recreate object shader after swapchain recreate");
-    context.recreating_swapchain = false;
-    return false;
-  }
-
-  uint32_t object_id = 0;
-  if (!vulkan_material_shader_acquire_resources(&context, &context.material_shader, &object_id)) {
-    DERROR("Failed to re-acquire shader resources after swapchain recreate");
-    context.recreating_swapchain = false;
-    return false;
-  }
-
   context.recreating_swapchain = false;
   return true;
 }
@@ -662,16 +642,11 @@ bool create_buffers(vulkan_context* context) {
   return true;
 }
 
-void vulkan_renderer_create_texture(const char* name, int32_t width, int32_t height, int32_t channel_count, const uint8_t* pixels, bool has_transparency, texture* out_texture) {
-  out_texture->width = width;
-  out_texture->height = height;
-  out_texture->channel_count = channel_count;
-  out_texture->generation = INVALID_ID;
+void vulkan_renderer_create_texture(const uint8_t* pixels, texture* texture) {
+  texture->internal_data = (vulkan_texture_data*)dallocate(sizeof(vulkan_texture_data), MEMORY_TAG_TEXTURE);
+  vulkan_texture_data* data = (vulkan_texture_data*)texture->internal_data;
 
-  out_texture->internal_data = (vulkan_texture_data*)dallocate(sizeof(vulkan_texture_data), MEMORY_TAG_TEXTURE);
-  vulkan_texture_data* data = (vulkan_texture_data*)out_texture->internal_data;
-
-  VkDeviceSize image_size = (VkDeviceSize)width * height * channel_count;
+  VkDeviceSize image_size = (VkDeviceSize)texture->width * texture->height * texture->channel_count;
   VkFormat image_format = VK_FORMAT_R8G8B8A8_UNORM;
 
   VkBufferUsageFlags usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
@@ -684,8 +659,8 @@ void vulkan_renderer_create_texture(const char* name, int32_t width, int32_t hei
   vulkan_image_create(
                       &context,
                       VK_IMAGE_TYPE_2D,
-                      width,
-                      height,
+                      texture->width,
+                      texture->height,
                       image_format,
                       VK_IMAGE_TILING_OPTIMAL,
                       VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
@@ -745,8 +720,7 @@ void vulkan_renderer_create_texture(const char* name, int32_t width, int32_t hei
     return;
   }
 
-  out_texture->has_transparency = has_transparency;
-  out_texture->generation++;
+  texture->generation++;
 }
 
 void vulkan_renderer_destroy_texture(struct texture* texture) {
@@ -764,3 +738,26 @@ void vulkan_renderer_destroy_texture(struct texture* texture) {
 
   memset(texture, 0, sizeof(struct texture));
 }
+
+bool vulkan_renderer_create_material(struct material* material) {
+  if (material) {
+    if (!vulkan_material_shader_acquire_resources(&context, &context.material_shader, material)) {
+      DERROR("vulkan_renderer_create_material() - failed to acquire shader resources");
+      return false;
+    }
+    DTRACE("Renderer: Material Created");
+    return true;
+  }
+  DERROR("vulkan_renderer_create_material() called with nulptr creation failed");
+  return false;
+}
+
+void vulkan_renderer_destroy_material(struct material* material) {
+  if (material) {
+    if (material->internal_id != INVALID_ID) {
+      vulkan_material_shader_release_resources(&context, &context.material_shader, material);
+    } else {
+      DWARN("vulkan_renderer_destroy_material called with internal_id=INVALID_ID, nothing was done");
+    }
+  } else {
+    DWARN("vulkan_renderer_destroy_material called with nullptr, nothing was 

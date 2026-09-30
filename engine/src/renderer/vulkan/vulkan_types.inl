@@ -11,7 +11,7 @@
 #define VK_CHECK(expr)                          \
   {                                             \
     DASSERT(expr == VK_SUCCESS);                \
-  }                                             \
+  }
 
 typedef struct vulkan_buffer {
   uint64_t total_size;
@@ -44,7 +44,7 @@ typedef struct vulkan_device {
   VkQueue transfer_queue;
 
   VkCommandPool graphics_command_pool;
-    
+
   VkPhysicalDeviceProperties properties;
   VkPhysicalDeviceFeatures features;
   VkPhysicalDeviceMemoryProperties memory;
@@ -126,24 +126,25 @@ typedef struct vulkan_pipeline {
   VkPipelineLayout pipeline_layout;
 } vulkan_pipeline;
 
-#define OBJECT_SHADER_STAGE_COUNT 2
+#define MATERIAL_SHADER_STAGE_COUNT 2
 
 typedef struct vulkan_descriptor_state {
   uint32_t generations[3];
   uint32_t ids[3];
 } vulkan_descriptor_state;
 
-#define VULKAN_OBJECT_SHADER_DESCRIPTOR_COUNT 2
+#define VULKAN_MATERIAL_SHADER_DESCRIPTOR_COUNT 2
+#define VULKAN_MATERIAL_SHADER_SAMPLER_COUNT 1
 
-typedef struct vulkan_object_shader_object_state {
+typedef struct vulkan_material_shader_instance_state {
   VkDescriptorSet descriptor_sets[3];
-  vulkan_descriptor_state descriptor_states[VULKAN_OBJECT_SHADER_DESCRIPTOR_COUNT];
-} vulkan_object_shader_object_state;
+  vulkan_descriptor_state descriptor_states[VULKAN_MATERIAL_SHADER_DESCRIPTOR_COUNT];
+} vulkan_material_shader_instance_state;
 
-#define VULKAN_OBJECT_MAX_OBJECT_COUNT 1024
+#define VULKAN_MAX_MATERIAL_COUNT 1024
 
 typedef struct vulkan_material_shader {
-  vulkan_shader_stage stages[OBJECT_SHADER_STAGE_COUNT];
+  vulkan_shader_stage stages[MATERIAL_SHADER_STAGE_COUNT];
   VkDescriptorPool global_descriptor_pool;
   VkDescriptorSetLayout global_descriptor_set_layout;
   VkDescriptorSet global_descriptor_sets[3];
@@ -151,9 +152,10 @@ typedef struct vulkan_material_shader {
   vulkan_buffer global_uniform_buffer;
   VkDescriptorPool object_descriptor_pool;
   VkDescriptorSetLayout object_descriptor_set_layout;
-  vulkan_buffer object_uniform_buffer;
-  uint32_t object_uniform_buffer_index;
-  vulkan_object_shader_object_state object_states[VULKAN_OBJECT_MAX_OBJECT_COUNT];
+  vulkan_buffer material_uniform_buffer;
+  uint32_t material_uniform_buffer_index;
+  texture_use sampler_use[VULKAN_MATERIAL_SHADER_SAMPLER_COUNT];
+  vulkan_material_shader_instance_state instance_states[VULKAN_MAX_MATERIAL_COUNT];
   vulkan_pipeline pipeline;
 } vulkan_material_shader;
 
@@ -166,19 +168,19 @@ typedef struct vulkan_context {
   VkInstance instance;
   VkAllocationCallbacks* allocator;
   VkSurfaceKHR surface;
-    
+
 #if defined(_DEBUG)
   VkDebugUtilsMessengerEXT debug_messenger;
 #endif
-    
+
   vulkan_device device;
 
   vulkan_swapchain swapchain;
   vulkan_renderpass main_renderpass;
-  
+
   vulkan_buffer object_vertex_buffer;
   vulkan_buffer object_index_buffer;
-  
+
   vulkan_command_buffer* graphics_command_buffers;
 
   VkSemaphore* image_available_semaphores;
@@ -186,15 +188,15 @@ typedef struct vulkan_context {
   uint32_t in_flight_fence_count;
   vulkan_fence* in_flight_fences;
   vulkan_fence** images_in_flight;
-    
+
   uint32_t image_index;
   uint32_t current_frame;
   bool recreating_swapchain;
   vulkan_material_shader material_shader;
-  
+
   uint64_t geometry_vertex_offset;
   uint64_t geometry_index_offset;
-  
+
   int32_t (*find_memory_index)(uint32_t type_filter, uint32_t property_flags);
 } vulkan_context;
 

@@ -10,5 +10,7 @@ bool vulkan_renderer_backend_begin_frame(renderer_backend* backend, float delta_
 void vulkan_renderer_update_global_state(mat4 projection, mat4 view, vec3 view_position, vec4 ambient_color, int32_t mode);
 bool vulkan_renderer_backend_end_frame(renderer_backend* backend, float delta_time);
 void vulkan_backend_update_object(geometry_render_data data);
-void vulkan_renderer_create_texture(const char* name, int32_t width, int32_t height, int32_t channel_count, const uint8_t* pixels, bool has_transparency, texture* out_texture);
+void vulkan_renderer_create_texture(const uint8_t* pixels, texture* texture);
 void vulkan_renderer_destroy_texture(texture* texture);
+bool vulkan_renderer_create_material(struct material* material);
+void vulkan_renderer_destroy_material(struct material* material);
