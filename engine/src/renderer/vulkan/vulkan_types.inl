@@ -141,7 +141,19 @@ typedef struct vulkan_material_shader_instance_state {
   vulkan_descriptor_state descriptor_states[VULKAN_MATERIAL_SHADER_DESCRIPTOR_COUNT];
 } vulkan_material_shader_instance_state;
 
-#define VULKAN_MAX_MATERIAL_COUNT 1024
+#define VULKAN_MAX_GEOMETRY_COUNT 1024
+#define VULKAN_MAX_MATERIAL_COUNT 4096
+
+typedef struct vulkan_geometry_data {
+  uint32_t id;
+  uint32_t generation;
+  uint32_t vertex_count;
+  uint32_t vertex_size;
+  uint32_t vertex_buffer_offset;
+  uint32_t index_count;
+  uint32_t index_size;
+  uint32_t index_buffer_offset;
+} vulkan_geometry_data;
 
 typedef struct vulkan_material_shader {
   vulkan_shader_stage stages[MATERIAL_SHADER_STAGE_COUNT];
@@ -154,7 +166,7 @@ typedef struct vulkan_material_shader {
   VkDescriptorSetLayout object_descriptor_set_layout;
   vulkan_buffer material_uniform_buffer;
   uint32_t material_uniform_buffer_index;
-  texture_use sampler_use[VULKAN_MATERIAL_SHADER_SAMPLER_COUNT];
+  texture_use sampler_uses[VULKAN_MATERIAL_SHADER_SAMPLER_COUNT];
   vulkan_material_shader_instance_state instance_states[VULKAN_MAX_MATERIAL_COUNT];
   vulkan_pipeline pipeline;
 } vulkan_material_shader;
@@ -197,6 +209,8 @@ typedef struct vulkan_context {
   uint64_t geometry_vertex_offset;
   uint64_t geometry_index_offset;
 
+  vulkan_geometry_data geometries[VULKAN_MAX_GEOMETRY_COUNT];
+  
   int32_t (*find_memory_index)(uint32_t type_filter, uint32_t property_flags);
 } vulkan_context;
 

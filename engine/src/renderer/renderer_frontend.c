@@ -20,30 +20,9 @@ typedef struct renderer_system_state {
   mat4 view;
   float near_clip;
   float far_clip;
-  material* test_material;
 } renderer_system_state;
 
 static renderer_system_state* state_ptr;
-
-bool event_on_debug_event(uint16_t code, void* sender, void* listener_inst, event_context data) {
-  const char* names[3] = {
-    "cobblestone",
-    "paving",
-    "paving2"
-  };
-  static int8_t choice = 2;
-  const char* old_name = names[choice];
-  choice++;
-  choice %= 3;
-  
-  state_ptr->test_material->diffuse_map.texture = texture_system_acquire(names[choice], true);
-  if (!state_ptr->test_material->diffuse_map.texture) {
-    DWARN("event_on_debug_event no texture, using default");
-    state_ptr->test_material->diffuse_map.texture = texture_system_get_default_texture();
-  }
-  texture_system_release(old_name);
-  return true;
-}
 
 bool renderer_system_initialize(uint64_t* memory_requirement, void* state, const char* application_name) {
   *memory_requirement = sizeof(renderer_system_state);
@@ -51,8 +30,6 @@ bool renderer_system_initialize(uint64_t* memory_requirement, void* state, const
     return true;
   }
   state_ptr = state;
-
-  event_register(EVENT_CODE_DEBUG0, state_ptr, event_on_debug_event);
   
   renderer_backend_create(RENDERER_BACKEND_TYPE_VULKAN, &state_ptr->backend);
   state_ptr->backend.frame_number = 0;
@@ -72,7 +49,6 @@ bool renderer_system_initialize(uint64_t* memory_requirement, void* state, const
 
 void renderer_system_shutdown(void* state) {
   if (state_ptr) {
-    event_unregister(EVENT_CODE_DEBUG0, state_ptr, event_on_debug_event);
     state_ptr->backend.shutdown(&state_ptr->backend);
   }
   state_ptr = 0;
@@ -107,25 +83,11 @@ bool renderer_draw_frame(render_packet* packet) {
   if (renderer_begin_frame(packet->delta_time)) {
     state_ptr->backend.update_global_state(state_ptr->projection, state_ptr->view, vec3_zero(), vec4_one(), 0);
 
-    mat4 model = mat4_translation((vec3){0, 0, 0});
-
-    geometry_render_data data = {};
-    data.model = model;
-    if (!state_ptr->test_material) {
-      state_ptr->test_material = material_system_acquire("test_material");
-      if (!state_ptr->test_material) {
-	DWARN("automatic material load failed, falling back to manual default");
-	material_config config;
-	strncpy(config.name, "test_material", MATERIAL_NAME_MAX_LENGTH);
-	config.auto_release = false;
-	config.diffuse_color = vec4_one();
-	strncpy(config.diffuse_map_name, DEFAULT_TEXTURE_NAME, TEXTURE_NAME_MAX_LENGTH);
-	state_ptr->test_material = material_system_acquire_from_config(config);
-      }
+    uint32_t count = packet->geometry_count;
+    for (uint32_t i = 0; i < count; ++i) {
+      state_ptr->backend.draw_geometry(packet->geometries[i]);
     }
-    data.material = state_ptr->test_material;
-    state_ptr->backend.update_object(data);
-
+    
     bool result = renderer_end_frame(packet->delta_time);
     if (!result) {
       DERROR("renderer_end_frame failed. Application shutting down...");
@@ -153,4 +115,12 @@ bool renderer_create_material(struct material* material) {
 
 void renderer_destroy_material(struct material* material) {
   state_ptr->backend.destroy_material(material);
+}
+
+bool renderer_create_geometry(geometry* geometry, uint32_t vertex_count, const vertex_3d* vertices, uint32_t index_count, const uint32_t* indices) {
+  return state_ptr->backend.create_geometry(geometry, vertex_count, vertices, index_count, indices);
+}
+
+void renderer_destroy_geometry(geometry* geometry) {
+  state_ptr->backend.destroy_geometry(geometry);
 }

@@ -7,10 +7,15 @@
 #include "core/event.h"
 #include "core/input.h"
 #include "core/clock.h"
+#include "core/dstring.h"
+
 #include "memory/linear_allocator.h"
 #include "renderer/renderer_frontend.h"
 #include "systems/texture_system.h"
 #include "systems/material_system.h"
+#include "systems/geometry_system.h"
+
+#include "math/dmath.h"
 
 typedef struct application_state {
   game* game_inst;
@@ -45,6 +50,11 @@ typedef struct application_state {
 
   uint64_t material_system_memory_requirement;
   void* material_system_state;
+
+  uint64_t geometry_system_memory_requirement;
+  void* geometry_system_state;
+
+  geometry* test_geometry;
 } application_state;
 
 static application_state* app_state;
@@ -52,6 +62,32 @@ static application_state* app_state;
 bool application_on_event(uint16_t code, void* sender, void* listener_inst, event_context context);
 bool application_on_key(uint16_t code, void* sender, void* listener_inst, event_context context);
 bool application_on_resized(uint16_t code, void* sender, void* listener_inst, event_context context);
+
+bool event_on_debug_event(uint16_t code, void* sender, void* listener_inst, event_context data) {
+  const char* names[3] = {
+    "cobblestone",
+    "paving",
+    "paving2",
+  };
+  static int8_t choice = 2;
+
+  const char* old_name = names[choice];
+
+  choice++;
+  choice %= 3;
+
+  if (app_state->test_geometry) {
+    app_state->test_geometry->material->diffuse_map.texture = texture_system_acquire(names[choice], true);
+    if (!app_state->test_geometry->material->diffuse_map.texture) {
+      DWARN("event_on_debug_event() no texture using default");
+      app_state->test_geometry->material->diffuse_map.texture = texture_system_get_default_texture();
+    }
+
+    texture_system_release(old_name);
+  }
+
+  return true;
+}
 
 bool application_create(game* game_inst) {
     if (game_inst->application_state) {
@@ -91,7 +127,8 @@ bool application_create(game* game_inst) {
     event_register(EVENT_CODE_KEY_PRESSED, 0, application_on_key);
     event_register(EVENT_CODE_KEY_RELEASED, 0, application_on_key);
     event_register(EVENT_CODE_RESIZED, 0, application_on_resized);
-
+    event_register(EVENT_CODE_DEBUG0, 0, event_on_debug_event);
+    
     platform_system_startup(&app_state->platform_system_memory_requirement, 0, 0, 0, 0, 0, 0);
     app_state->platform_system_state = linear_allocator_allocate(&app_state->systems_allocator, app_state->platform_system_memory_requirement);
     if (!platform_system_startup(
@@ -129,6 +166,19 @@ bool application_create(game* game_inst) {
       DFATAL("Failed to initialize material system; appilcatoin cannot continue");
       return false;
     }
+
+    geometry_system_config geometry_sys_config;
+    geometry_sys_config.max_geometry_count = 4096;
+    geometry_system_initialize(&app_state->geometry_system_memory_requirement, 0, geometry_sys_config);
+    app_state->geometry_system_state = linear_allocator_allocate(&app_state->systems_allocator, app_state->material_system_memory_requirement);
+    if (!geometry_system_initialize(&app_state->geometry_system_memory_requirement, app_state->geometry_system_state, geometry_sys_config)) {
+      DFATAL("Failed to initialize geometry system application cannot continue");
+    }
+
+    geometry_config g_config = geometry_system_generate_plane_config(10.0f, 5.0f, 5, 5, 5.0f, 2.0f, "test geometry", "test_material");
+    app_state->test_geometry = geometry_system_acquire_from_config(g_config, true);
+    dfree(g_config.vertices, sizeof(vertex_3d) * g_config.vertex_count, MEMORY_TAG_ARRAY);
+    dfree(g_config.indices, sizeof(uint32_t) * g_config.index_count, MEMORY_TAG_ARRAY);
     
     if (!app_state->game_inst->initialize(app_state->game_inst)) {
       DFATAL("Game failed to initialize.");
@@ -176,7 +226,15 @@ bool application_run() {
 
             render_packet packet;
             packet.delta_time = delta;
-            renderer_draw_frame(&packet);
+
+	    geometry_render_data test_render;
+	    test_render.geometry = app_state->test_geometry;
+	    test_render.model = mat4_identity();
+
+	    packet.geometry_count = 1;
+	    packet.geometries = &test_render;
+	    
+	    renderer_draw_frame(&packet);
 
             double frame_end_time = platform_get_absolute_time();
             double frame_elapsed_time = frame_end_time - frame_start_time;
@@ -202,8 +260,10 @@ bool application_run() {
     event_unregister(EVENT_CODE_APPLICATION_QUIT, 0, application_on_event);
     event_unregister(EVENT_CODE_KEY_PRESSED, 0, application_on_key);
     event_unregister(EVENT_CODE_KEY_RELEASED, 0, application_on_key);
-
+    event_unregister(EVENT_CODE_DEBUG0, 0, event_on_debug_event);
+    
     input_system_shutdown(app_state->input_system_state);
+    geometry_system_shutdown(app_state->geometry_system_state);
     material_system_shutdown(app_state->material_system_state);
     texture_system_shutdown(app_state->texture_system_state);
     renderer_system_shutdown(app_state->renderer_system_state);

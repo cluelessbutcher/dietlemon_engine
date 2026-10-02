@@ -189,6 +189,14 @@ void material_system_release(const char* name) {
   }
 }
 
+material* material_system_get_default() {
+  if (state_ptr) {
+    return &state_ptr->default_material;
+  }
+  DFATAL("material_sysytem_get_default() called before system is initialized");
+  return 0;
+}
+
 bool load_material(material_config config, material* m) {
   memset(m, 0, sizeof(material));
   strncpy(m->name, config.name, MATERIAL_NAME_MAX_LENGTH);

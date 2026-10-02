@@ -5,6 +5,7 @@
 
 DAPI int32_t string_format(char* dest, const char* format, ...);
 DAPI int32_t string_format_v(char* dest, const char* format, void* va_list);
+DAPI char* string_empty(char* str);
 DAPI char* string_trim(char* str);
 DAPI void string_mid(char* dest, const char* source, int32_t start, int32_t length);
 DAPI int32_t string_index_of(char* str, char c);
