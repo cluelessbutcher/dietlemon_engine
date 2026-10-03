@@ -5,9 +5,9 @@
 #include "containers/hashtable.h"
 #include "math/dmath.h"
 #include "renderer/renderer_frontend.h"
-#include "systems/texture_system.h"
 
-#include "platform/filesystem.h"
+#include "systems/texture_system.h"
+#include "systems/resource_system.h"
 
 #include <string.h>
 #include <strings.h>
@@ -30,7 +30,6 @@ static material_system_state* state_ptr = 0;
 bool create_default_material(material_system_state* state);
 bool load_material(material_config config, material* m);
 void destroy_material(material* m);
-bool load_configuration_file(const char* path, material_config* out_config);
 
 bool material_system_initialize(uint64_t* memory_requirement, void* state, material_system_config config) {
   if (config.max_material_count == 0) {
@@ -95,19 +94,23 @@ void material_system_shutdown(void* state) {
 }
 
 material* material_system_acquire(const char* name) {
-  material_config config;
-  memset(&config, 0, sizeof(material_config));
-  config.auto_release = true;
-  char* format_str = "assets/materials/%s.%s";
-  char full_file_path[512];
-
-  string_format(full_file_path, format_str, name, "kmt");
-  if (!load_configuration_file(full_file_path, &config)) {
-    DERROR("Failed to load material file: '%s', Null pointer will be returned", full_file_path);
+  resource material_resource;
+  if (!resource_system_load(name, RESOURCE_TYPE_MATERIAL, &material_resource)) {
+    DERROR("Failed to load material resource, returning nullptr");
     return 0;
   }
 
-  return material_system_acquire_from_config(config);
+  material* m;
+  if (material_resource.data) {
+    m = material_system_acquire_from_config(*(material_config*)material_resource.data);
+  }
+
+  resource_system_unload(&material_resource);
+  if (!m) {
+    DERROR("Failed to load material resource, returning nullptr");
+  }
+
+  return m;
 }
 
 material* material_system_acquire_from_config(material_config config) {
@@ -247,62 +250,5 @@ bool create_default_material(material_system_state* state) {
     return false;
   }
 
-  return true;
-}
-
-bool load_configuration_file(const char* path, material_config* out_config) {
-  file_handle f;
-  if (!filesystem_open(path, FILE_MODE_READ, false, &f)) {
-    DERROR("load_configuration_file - unable to open file for reading: '%s'", path);
-    return false;
-  }
-
-  char line_buf[512] = "";
-  char* p = &line_buf[0];
-  uint64_t line_length = 0;
-  uint32_t line_number = 1;
-  while (filesystem_read_line(&f, 511, &p, &line_length)) {
-    char* trimmed = string_trim(line_buf);
-    line_length = strlen(trimmed);
-    if (line_length < 1 || trimmed[0] == '#') {
-      line_number++;
-      continue;
-    }
-
-    int32_t equal_index = string_index_of(trimmed, '=');
-    if (equal_index == -1) {
-      DWARN("Potential formatting issue found in file '%s': '=' token not found. skipping line %u", path, line_number);
-      line_number++;
-      continue;
-    }
-
-    char raw_var_name[64];
-    memset(raw_var_name, 0, sizeof(char) * 64);
-    string_mid(raw_var_name, trimmed, 0, equal_index);
-    char* trimmed_var_name = string_trim(raw_var_name);
-
-    char raw_value[446];
-    memset(raw_value, 0, sizeof(char) * 446);
-    string_mid(raw_value, trimmed, equal_index + 1, -1);
-    char* trimmed_value = string_trim(raw_value);
-
-    if (strcasecmp(trimmed_var_name, "version") == 0) {
-
-    } else if (strcasecmp(trimmed_var_name, "name") == 0) {
-      strncpy(out_config->name, trimmed_value, MATERIAL_NAME_MAX_LENGTH);
-    } else if (strcasecmp(trimmed_var_name, "diffuse_map_name") == 0) {
-      strncpy(out_config->diffuse_map_name, trimmed_value, TEXTURE_NAME_MAX_LENGTH);
-    } else if (strcasecmp(trimmed_var_name, "diffuse_color") == 0) {
-      if (!string_to_vec4(trimmed_value, &out_config->diffuse_color)) {
-        DWARN("Error parsing diffuse_color in file '%s'; using the defualt white instead", path);
-        out_config->diffuse_color = vec4_one();
-      }
-    }
-
-    memset(line_buf, 0, sizeof(char) * 512);
-    line_number++;
-  }
-
-  filesystem_close(&f);
   return true;
 }

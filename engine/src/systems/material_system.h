@@ -10,13 +10,6 @@ typedef struct material_system_config {
   uint32_t max_material_count;
 } material_system_config;
 
-typedef struct material_config {
-  char name[MATERIAL_NAME_MAX_LENGTH];
-  bool auto_release;
-  vec4 diffuse_color;
-  char diffuse_map_name[TEXTURE_NAME_MAX_LENGTH];
-} material_config;
-
 bool material_system_initialize(uint64_t* memory_requirement, void* state, material_system_config config);
 void material_system_shutdown(void* state);
 

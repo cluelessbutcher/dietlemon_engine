@@ -7,8 +7,7 @@
 
 #include "renderer/renderer_frontend.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "vendor/stb_image.h"
+#include "systems/resource_system.h"
 
 #include <string.h>
 
@@ -220,63 +219,55 @@ void destroy_default_textures(texture_system_state* state) {
 }
 
 bool load_texture(const char* texture_name, texture* t) {
-  char* format_str = "assets/textures/%s.%s";
-  const int32_t required_channel_count = 4;
-  stbi_set_flip_vertically_on_load(true);
-  char full_file_path[512];
-
-  string_format(full_file_path, format_str, texture_name, "png");
-
-  texture temp_texture;
-
-  uint8_t* data = stbi_load(full_file_path, (int32_t*)&temp_texture.width, (int32_t*)&temp_texture.height, (int32_t*)&temp_texture.channel_count, required_channel_count);
-  temp_texture.channel_count = required_channel_count;
-
-  if (data) {
-    uint32_t current_generation = t->generation;
-    t->generation = INVALID_ID;
-    uint64_t total_size = temp_texture.width * temp_texture.height * required_channel_count;
-    int has_transparency = false;
-    for (uint64_t i = 0; i < total_size; i += required_channel_count) {
-      uint8_t a = data[i + 3];
-      if (a < 255) {
-        has_transparency = true;
-        break;
-      }
-    }
-
-    if (stbi_failure_reason()) {
-      DWARN("load_texture() failed to load file '%s': %s", full_file_path, stbi_failure_reason());
-      stbi__err(0, 0);
-      return false;
-    }
-
-    strncpy(temp_texture.name, texture_name, TEXTURE_NAME_MAX_LENGTH);
-    temp_texture.generation = INVALID_ID;
-    temp_texture.has_transparency = has_transparency;
-    renderer_create_texture(data, &temp_texture);
-
-    texture old = *t;
-    *t = temp_texture;
-    renderer_destroy_texture(&old);
-
-    if (current_generation == INVALID_ID) {
-      t->generation = 0;
-    } else {
-      t->generation = current_generation + 1;
-    }
-
-    stbi_image_free(data);
-    return true;
-  } else {
-    if (stbi_failure_reason()) {
-      DWARN("load_texture() failed to load file '%s': %s", full_file_path, stbi_failure_reason());
-      stbi__err(0, 0);
-    }
-
+  resource img_resource;
+  if (!resource_system_load(texture_name, RESOURCE_TYPE_IMAGE, &img_resource)) {
+    DERROR("Failed to load image resource for texture: '%S'", texture_name);
     return false;
   }
+
+  image_resource_data* resource_data = img_resource.data;
+  
+  texture temp_texture;
+  temp_texture.width = resource_data->width;
+  temp_texture.height = resource_data->height;
+  temp_texture.channel_count = resource_data->channel_count;
+
+  uint32_t current_generation = t->generation;
+  t->generation = INVALID_ID;
+
+  uint64_t total_size = temp_texture.width * temp_texture.height * temp_texture.channel_count;
+  int has_transparency = false;
+  for (uint64_t i = 0; i < total_size; i += temp_texture.channel_count) {
+    uint8_t a = resource_data->pixels[i + 3];
+    if (a < 255) {
+      has_transparency = true;
+      break;
+    }
+  }
+
+  strncpy(temp_texture.name, texture_name, TEXTURE_NAME_MAX_LENGTH);
+  temp_texture.generation = INVALID_ID;
+  temp_texture.has_transparency = has_transparency;
+
+  renderer_create_texture(resource_data->pixels, &temp_texture);
+  texture old = *t;
+  *t = temp_texture;
+  
+  renderer_destroy_texture(&old);
+
+  renderer_destroy_texture(&old);
+
+  if (current_generation == INVALID_ID) {
+    t->generation = 0;
+  } else {
+    t->generation = current_generation + 1;
+  }
+
+  resource_system_unload(&img_resource);
+  
+  return true;
 }
+
 
 void destroy_texture(texture* t) {
   renderer_destroy_texture(t);

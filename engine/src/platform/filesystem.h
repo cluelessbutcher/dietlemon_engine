@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "defines.h"
@@ -15,7 +16,9 @@ typedef enum file_modes {
 DAPI bool filesystem_exists(const char* path);
 DAPI bool filesystem_open(const char* path, file_modes mode, bool binary, file_handle* out_handle);
 DAPI void filesystem_close(file_handle* handle);
+DAPI bool filesystem_size(file_handle* handle, uint64_t* out_size);
+DAPI bool filesystem_read_all_bytes(file_handle* handle, uint8_t* out_bytes, uint64_t* out_bytes_read);
 DAPI bool filesystem_read_line(file_handle* handle, uint64_t max_length, char** line_buf, uint64_t* out_line_length);
 DAPI bool filesystem_read(file_handle* handle, uint64_t data_size, void* out_data, uint64_t* out_bytes_read);
-DAPI bool filesystem_read_all_bytes(file_handle* handle, uint8_t** out_bytes, uint64_t* out_bytes_read);
+DAPI bool filesystem_read_all_text(file_handle* handle, char* out_text, uint64_t* out_bytes_read);
 DAPI bool filesystem_write(file_handle* handle, uint64_t data_size, const void* data, uint64_t* out_bytes_written);
