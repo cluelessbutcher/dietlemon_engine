@@ -135,8 +135,8 @@ bool ppumpmsg(platform_state* plat_state) {
     case XCB_BUTTON_PRESS:
     case XCB_BUTTON_RELEASE: {
     } break;
-    case XCB_MOTION_NOTIFY:
-      break;
+    case XCB_MOTION_NOTIFY: {
+    } break;
     case XCB_CONFIGURE_NOTIFY: {
     } break;
     case XCB_CLIENT_MESSAGE: {
