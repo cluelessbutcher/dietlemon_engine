@@ -13,8 +13,8 @@ bool pstartup(platform_state* plat_state,
 void pshutdown(platform_state* plat_state);
 bool ppumpmsg(platform_state* plat_state);
 
-DAPI void* palloc(uint64_t size, bool aligned);
-DAPI void pfree(void* block, bool aligned);
+void* palloc(uint64_t size, bool aligned);
+void pfree(void* block, bool aligned);
 
 void pcw(const char* message, uint8_t color);
 void pcwerr(const char* message, uint8_t color);

@@ -2,7 +2,9 @@
 
 #include "game_types.h"
 
-#include "logger.h"
+#include "core/logger.h"
+#include "core/dmemory.h"
+#include "core/event.h"
 
 #include "platform/platform.h"
 
@@ -38,6 +40,11 @@ bool application_create(game* game_inst) {
   app_state.is_running = true;
   app_state.is_suspended = false;
 
+  if (!event_initialize()) {
+    DERROR("Event system failed initialization; application cannot continue");
+    return false;
+  }
+  
   if (!pstartup(&app_state.platform,
 		game_inst->app_config.name,
 		game_inst->app_config.start_pos_x,
@@ -60,6 +67,8 @@ bool application_create(game* game_inst) {
 }
 
 bool application_run() {
+  DINFO(get_memory_usage_str());
+
   while (app_state.is_running) {
     if (!ppumpmsg(&app_state.platform)) {
       app_state.is_running = false;
@@ -81,6 +90,9 @@ bool application_run() {
   }
 
   app_state.is_running = false;
+
+  event_shutdown();
+  
   pshutdown(&app_state.platform);
   return true;
 }

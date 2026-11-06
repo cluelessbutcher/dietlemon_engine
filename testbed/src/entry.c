@@ -1,7 +1,7 @@
 #include "game.h"
 
 #include <entry.h>
-#include <platform/platform.h>
+#include <core/dmemory.h>
 
 bool create_game(game* out_game) {
   out_game->app_config.start_pos_x = 100;
@@ -14,7 +14,7 @@ bool create_game(game* out_game) {
   out_game->render = game_render;
   out_game->initialize = game_initialize;
   out_game->on_resize = game_on_resize;
-  out_game->state = palloc(sizeof(game_state), true);
+  out_game->state = dalloc(sizeof(game_state), MEMORY_TAG_GAME);
 
   return true;
 }

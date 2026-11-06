@@ -1,4 +1,4 @@
-#pragma
+#pragma once
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -23,7 +23,7 @@ STATIC_ASSERT(sizeof(float) == 4, "Expected float to be 4 bytes");
 STATIC_ASSERT(sizeof(double) == 8, "Expected double to be 8 bytes");
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
-#define DPLATFORM_WINDOW 1
+#define DPLATFORM_WINDOWS 1
 #ifndef _WIN64
 #error "64-bit is required on windows"
 #endif

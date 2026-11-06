@@ -2,6 +2,8 @@
 
 #include "core/application.h"
 #include "core/logger.h"
+#include "core/dmemory.h"
+
 #include "game_types.h"
 
 extern bool create_game(game* out_game);
@@ -24,5 +26,9 @@ int main(void) {
     DINFO("Application did not shutdown gracefully");
     return 2;
   }
+
+  initialize_memory();
+  shutdown_memory();
+
   return 0;
 }
