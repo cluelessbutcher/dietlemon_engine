@@ -22,6 +22,9 @@ typedef struct application_state {
 static bool initialized = false;
 static application_state app_state;
 
+bool application_on_event(uint16_t code, void* sender, void* listener_inst, event_context context);
+bool application_on_key(uint16_t code, void* sender, void* listener_inst, event_context context);
+
 bool application_create(game* game_inst) {
     if (initialized) {
         DERROR("application_create() called more than once");
@@ -46,6 +49,10 @@ bool application_create(game* game_inst) {
       DERROR("Event system failed initialization; application cannot continue");
       return false;
     }
+
+    event_register(EVENT_CODE_APPLICATION_QUIT, 0, application_on_event);
+    event_register(EVENT_CODE_KEY_PRESSED, 0 , application_on_key);
+    event_register(EVENT_CODE_KEY_RELEASED, 0, application_on_key);
 
     if (!pstartup(&app_state.platform,
                   game_inst->app_config.name,
@@ -95,9 +102,49 @@ bool application_run() {
     
     app_state.is_running = false;
 
+    event_unregister(EVENT_CODE_APPLICATION_QUIT, 0, application_on_event);
+    event_unregister(EVENT_CODE_KEY_PRESSED, 0, application_on_key);
+    event_unregister(EVENT_CODE_KEY_RELEASED, 0, application_on_key);
+
     event_shutdown();
     input_shutdown();
 
     pshutdown(&app_state.platform);
     return true;
+}
+
+bool application_on_event(uint16_t code, void* sender, void* listener_inst, event_context context) {
+  switch (code) {
+    case EVENT_CODE_APPLICATION_QUIT: {
+      DINFO("EVENT_CODE_APPLICATION_QUIT recieved, shutting down\n");
+      app_state.is_running = false;
+      return true;
+    }
+  }
+
+  return false;
+}
+
+bool application_on_key(uint16_t code, void* sender, void* listener_inst, event_context context) {
+  if (code == EVENT_CODE_KEY_PRESSED) {
+    uint16_t key_code = context.data.u16[0];
+    if (key_code == KEY_ESCAPE) {
+      event_context data = {};
+      event_fire(EVENT_CODE_APPLICATION_QUIT, 0, data);
+      return true;
+    } else if (key_code == KEY_A) {
+      DDEBUG("Explicit - A key pressed");
+    }  else {
+      DDEBUG("'%c' key pressed in window!", key_code);
+    }
+  } else if (code == EVENT_CODE_KEY_RELEASED) {
+    uint16_t key_code = context.data.u16[0];
+    if (key_code == KEY_B) {
+      DDEBUG("Explicit - B key released");
+    } else {
+      DDEBUG("'%c' key released in window", key_code);
+    }
+  }
+
+  return false;
 }
