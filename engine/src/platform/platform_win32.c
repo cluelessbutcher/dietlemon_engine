@@ -169,7 +169,7 @@ LRESULT CALLBACK win32_process_message(HWND hwnd, uint32_t msg, WPARAM w_param, 
         } break;
         case WM_MOUSEMOVE: {
             int32_t x_position = GET_X_LPARAM(l_param);
-            int32_t y_postiion = GET_Y_LPARAM(l_param);
+            int32_t y_position = GET_Y_LPARAM(l_param);
             input_process_mouse_move(x_position, y_position);
         } break;
         case WM_MOUSEWHEEL: {
@@ -179,7 +179,7 @@ LRESULT CALLBACK win32_process_message(HWND hwnd, uint32_t msg, WPARAM w_param, 
                 input_process_mouse_wheel(z_delta);
             }
         } break;
-        case WM_LBUTTONDOWN:
+        case WM_LBUTTONDOWN:    
         case WM_MBUTTONDOWN:
         case WM_RBUTTONDOWN:
         case WM_LBUTTONUP:
@@ -192,8 +192,8 @@ LRESULT CALLBACK win32_process_message(HWND hwnd, uint32_t msg, WPARAM w_param, 
                 case WM_LBUTTONUP:
                     mouse_button = BUTTON_LEFT;
                     break;
-                case WM_BUTTONDOWN:
-                case WM_BUTTONUP:
+                case WM_MBUTTONDOWN:
+                case WM_MBUTTONUP:
                     mouse_button = BUTTON_MIDDLE;
                     break;
                 case WM_RBUTTONDOWN:
@@ -202,7 +202,7 @@ LRESULT CALLBACK win32_process_message(HWND hwnd, uint32_t msg, WPARAM w_param, 
                     break;
             }
             
-            if (mouse_button != BUTTON_MAX_BUTTON) {
+            if (mouse_button != BUTTON_MAX_BUTTONS) {
                 input_process_button(mouse_button, pressed);
             }
         } break;

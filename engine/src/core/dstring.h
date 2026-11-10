@@ -2,4 +2,4 @@
 
 #include "defines.h"
 
-DAPI char* strdup(const char* str);
+DAPI char* dstrdup(const char* str);

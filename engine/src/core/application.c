@@ -6,6 +6,9 @@
 #include "core/dmemory.h"
 #include "core/event.h"
 #include "core/input.h"
+#include "core/clock.h"
+
+#include "renderer/renderer_frontend.h"
 
 #include "platform/platform.h"
 
@@ -16,6 +19,7 @@ typedef struct application_state {
     platform_state platform;
     int16_t width;
     int16_t height;
+    clock clock;
     double last_time;
 } application_state;
 
@@ -63,6 +67,11 @@ bool application_create(game* game_inst) {
       return false;
     }
 
+    if (!renderer_initialize(game_inst->app_config.name, &app_state.platform)) {
+      DFATAL("Failed to initialize renderer; aborting applicatoin");
+      return false;
+    }
+
     if (!app_state.game_inst->initialize(app_state.game_inst)) {
       DFATAL("Game failed to initialize");
       return false;
@@ -76,6 +85,13 @@ bool application_create(game* game_inst) {
 }
 
 bool application_run() {
+    clock_start(&app_state.clock);
+    clock_update(&app_state.clock);
+    app_state.last_time = app_state.clock.elapsed;
+    // double running_time = 0;
+    // uint8_t frame_count = 0;
+    double target_frame_seconds = 1.0f / 60;
+
     DINFO(get_memory_usage_str());
 
     while (app_state.is_running) {
@@ -84,20 +100,43 @@ bool application_run() {
       }
 
       if (!app_state.is_suspended) {
-        if (!app_state.game_inst->update(app_state.game_inst, (float)0)) {
+        clock_update(&app_state.clock);
+        double current_time = app_state.clock.elapsed;
+        double delta = (current_time - app_state.last_time);
+        double frame_start_time = pgat();
+
+        if (!app_state.game_inst->update(app_state.game_inst, (float)delta)) {
           DFATAL("Game update failed; shutting down");
           app_state.is_running = false;
           break;
         }
     
-        if (!app_state.game_inst->render(app_state.game_inst, (float)0)) {
+        if (!app_state.game_inst->render(app_state.game_inst, (float)delta)) {
           DFATAL("Game render failed; shutting down");
           app_state.is_running = false;
           break;
         }
-      }
+        
+        render_packet packet;
+        packet.delta_time = delta;
+        renderer_draw_frame(&packet);
+        double frame_end_time = pgat();
+        double frame_elapsed_time = frame_end_time - frame_start_time;
+        // running_time += frame_elapsed_time;
+        double remaining_seconds = target_frame_seconds - frame_elapsed_time;
 
-      input_update(0);
+        if (remaining_seconds > 0) {
+          uint64_t remaining_ms = (remaining_seconds * 1000);
+          bool limit_frames = false;
+          if (remaining_ms > 0 && limit_frames) {
+            psleep(remaining_ms - 1);
+          }
+          // frame_count++;
+        }
+
+        input_update(delta);
+        app_state.last_time = current_time;
+      }
     }
     
     app_state.is_running = false;
@@ -108,6 +147,7 @@ bool application_run() {
 
     event_shutdown();
     input_shutdown();
+    renderer_shutdown();
 
     pshutdown(&app_state.platform);
     return true;
