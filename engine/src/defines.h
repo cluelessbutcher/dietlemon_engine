@@ -25,7 +25,7 @@ STATIC_ASSERT(sizeof(double) == 8, "Expected double to be 8 bytes");
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
 #define DPLATFORM_WINDOWS 1
 #ifndef _WIN64
-#error "64-bit is required on windows"
+#error "64-bit is required on Windows"
 #endif
 #elif defined(__linux__) || defined(__gnu_linux__)
 #define DPLATFORM_LINUX 1
@@ -34,9 +34,9 @@ STATIC_ASSERT(sizeof(double) == 8, "Expected double to be 8 bytes");
 #endif
 #elif defined(__unix__)
 #define DPLATFORM_UNIX 1
-#elif defined(_POXIS_VERSION)
-#define DPLATFORM_POXIS 1
-#elif __APPLE__
+#elif defined(_POSIX_VERSION)
+#define DPLATFORM_POSIX 1
+#elif defined(__APPLE__)
 #define DPLATFORM_APPLE 1
 #include <TargetConditionals.h>
 #if TARGET_IPHONE_SIMULATOR
@@ -44,7 +44,8 @@ STATIC_ASSERT(sizeof(double) == 8, "Expected double to be 8 bytes");
 #define DPLATFORM_IOS_SIMULATOR 1
 #elif TARGET_OS_IPHONE
 #define DPLATFORM_IOS 1
-#elif TARGET_OS_MAX
+#elif TARGET_OS_MAC
+#define DPLATFORM_MAC 1
 #else
 #error "Unknown Apple Platform"
 #endif
