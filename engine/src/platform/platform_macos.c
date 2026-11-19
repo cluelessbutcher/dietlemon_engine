@@ -8,6 +8,7 @@
 #include "containers/darray.h"
 
 #include "renderer/vulkan/vulkan_platform.h"
+#include "renderer/vulkan/vulkan_types.inl"
 
 #include <vulkan/vulkan.h>
 #include <vulkan/vulkan_metal.h>
@@ -118,6 +119,18 @@ void psleep(uint64_t ms) {
     ts.tv_sec = (long)(ms / 1000);
     ts.tv_nsec = ((long)ms % 1000) * 1000 * 1000;
     nanosleep(&ts, 0);
+}
+
+bool platform_create_vulkan_surface(platform_state* plat_state, vulkan_context* context) {
+    internal_state* state = (internal_state*)plat_state->internal_state;
+
+    VkResult result = glfwCreateWindowSurface(context->instance, state->glfw_window, 0, &context->surface);
+    if (result != VK_SUCCESS) {
+        DFATAL("Vulkan surface creation failed");
+        return false;
+    }
+
+    return true;
 }
 
 static void platform_error_callback(int error, const char* description) {

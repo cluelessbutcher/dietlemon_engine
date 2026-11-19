@@ -3,6 +3,7 @@
 
 #include "vulkan_types.inl"
 #include "vulkan_platform.h"
+#include "vulkan_device.h"
 
 #include "core/dstring.h"
 #include "containers/darray.h"
@@ -195,6 +196,17 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
 
     DDEBUG("Vulkan debugger created");
 #endif
+
+    DDEBUG("Creating Vulkan Surface...");
+    if (!platform_create_vulkan_surface(plat_state, &context)) {
+        DERROR("Failed to create platform surface");
+        return false;
+    }
+    DDEBUG("Vulkan surface created");
+    if (!vulkan_device_create(&context)) {
+        DERROR("Failed to create device");
+        return false;
+    }
 
     darray_destroy(required_extensions);
 

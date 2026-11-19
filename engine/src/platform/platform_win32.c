@@ -11,9 +11,14 @@
 #include <windowsx.h>
 #include <stdlib.h>
 
+#include <vulkan/vulkan.h>
+#include <vulkan/vulkan_win32.h>
+#include "renderer/vulkan/vulkan_types.inl"
+
 typedef struct internal_state {
     HINSTANCE h_instance;
     HWND hwnd;
+    VkSurfaceKHR surface;
 } internal_state;
 
 static double clock_frequency;
@@ -148,7 +153,7 @@ double pgat() {
 
 void psleep(uint64_t ms) {
     Sleep((DWORD)ms);
-}
+
 
 LRESULT CALLBACK win32_process_message(HWND hwnd, uint32_t msg, WPARAM w_param, LPARAM l_param) {
     switch (msg) {
@@ -214,6 +219,22 @@ LRESULT CALLBACK win32_process_message(HWND hwnd, uint32_t msg, WPARAM w_param, 
 
 void platform_get_required_extension_names(const char*** names_darray) {
     darray_push(*names_darray, &"VK_KHR_win32_surface");
+}
+
+bool platform_create_vulkan_surface(platform_state* plat_state, vulkan_context* context) {
+    internal_state* state = (internal_state*)plat_state->internal_state;
+    VkWin32SurfaceCreateInfoKHR create_info = {VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR};
+    create_info.hinstance = state->h_instance;
+    create_info.hwnd = state->hwnd;
+
+    VkResult result = vkCreateWin32SurfaceKHR(context->instance, &create_info, context->allocator, &state->surface);
+    if (!result != VK_SUCCESS) {
+        DFATAL("Vulkan surface creation failed");
+        return false;
+    }
+
+    context->surface = state->surface;
+    return true;
 }
 
 #endif
