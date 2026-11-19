@@ -5,8 +5,12 @@
 #include "core/logger.h"
 #include "core/event.h"
 #include "core/input.h"
+#include "containers/darray.h"
+
+#include "renderer/vulkan/vulkan_platform.h"
 
 #include <vulkan/vulkan.h>
+#include <vulkan/vulkan_metal.h>
 
 #ifndef GLFW_INCLUDE_NONE
 #define GLFW_INCLUDE_NONE
@@ -280,6 +284,10 @@ static keys translate_key(int key) {
         case GLFW_KEY_RIGHT_SUPER: return KEY_RWIN;
         default: return KEYS_MAX_KEYS;
     }
+}
+
+void platform_get_required_extension_names(const char*** names_darray) {
+    darray_push(*names_darray, &VK_EXT_METAL_SURFACE_EXTENSION_NAME);
 }
 
 #endif

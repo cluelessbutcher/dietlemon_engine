@@ -38,7 +38,7 @@ bool application_create(game* game_inst) {
     app_state.game_inst = game_inst;
     initialize_logging();
     input_initialize();
-    
+
     DFATAL("A test message: %f", 3.14f);
     DERROR("A test message: %f", 3.14f);
     DWARN("A test message: %f", 3.14f);

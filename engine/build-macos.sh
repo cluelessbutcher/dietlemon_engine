@@ -1,21 +1,31 @@
-set echo on
+
+#!/bin/bash
+set -euo pipefail
 
 mkdir -p ../bin
 
-cFilenames=$(find . -type f -name "*.c")
-assembly="engine"
-compilerFlags="-g -shared -fdeclspec -fPIC"
+VULKAN="/usr/local/opt/vulkan-loader"
+GLFW="/usr/local/opt/glfw"
+HEADERS="/usr/local/opt/vulkan-headers"
 
-includeFlags="-Isrc -I$VULKAN_SDK/include -I/Users/cluelssbutcher/libs/glfw-3.5.1.bin.MACOS/include"
+cFilenames=$(find src -type f -name "*.c")
 
-linkerFlags="-lvulkan -lglfw.3 \
--L$VULKAN_SDK/lib \
--L/Users/cluelssbutcher/libs/glfw-3.5.1.bin.MACOS/lib-universal \
--framework Cocoa -framework IOKit -framework CoreFoundation \
--Wl,-rpath,$VULKAN_SDK/lib \
--Wl,-rpath,/Users/cluelssbutcher/libs/glfw-3.5.1.bin.MACOS/lib-universal"
+echo "Building engine..."
 
-defines="-D_DEBUG -DDEXPORT"
+clang $cFilenames \
+    -g -dynamiclib -fdeclspec -fPIC \
+    -D_DEBUG -DDEXPORT \
+    -Isrc \
+    -I"$HEADERS/include" \
+    -I"$GLFW/include" \
+    -L"$VULKAN" \
+    -L"$GLFW/lib" \
+    -lvulkan -lglfw \
+    -framework Cocoa \
+    -framework IOKit \
+    -framework CoreFoundation \
+    -o ../bin/libengine.dylib \
+    -Wl,-rpath,"$VULKAN/lib" \
+    -Wl,-rpath,"$GLFW/lib"
 
-echo "Building $assembly..."
-clang $cFilenames $compilerFlags -o ../bin/lib$assembly.dylib $defines $includeFlags $linkerFlags
+echo "Engine built successfully."

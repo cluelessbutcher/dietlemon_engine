@@ -6,6 +6,8 @@
 #include "core/event.h"
 #include "core/input.h"
 
+#include "containers/darray.h"
+
 #include <xcb/xcb.h>
 #include <X11/keysym.h>
 #include <X11/XKBlib.h>
@@ -462,6 +464,10 @@ keys translate_keycode(uint32_t x_keycode) {
         default:
             return 0;
     }
+}
+
+void platform_get_required_extension_names(const char*** names_darray) {
+    darray_push(*names_darray, &"VK_KHR_xcb_surface");
 }
 
 #endif
