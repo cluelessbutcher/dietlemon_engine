@@ -52,7 +52,7 @@ typedef struct vulkan_swapchain {
     VkSwapchainKHR handle;
     uint32_t image_count;
     VkImage* images;
-    VkImageViews* views;
+    VkImageView* views;
 
     vulkan_image depth_attachment;
 } vulkan_swapchain;
@@ -73,7 +73,7 @@ typedef struct vulkan_context {
     uint32_t image_index;
     uint32_t current_frame;
 
-    bool recreating_swapchain;
+    vulkan_swapchain swapchain;
 
     int32_t (*find_memory_index)(uint32_t type_filter, uint32_t property_flags);
 

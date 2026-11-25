@@ -227,7 +227,7 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
 
 void vulkan_renderer_backend_shutdown(renderer_backend* backend) {
     vulkan_swapchain_destroy(&context, &context.swapchain);
-    DDBUG("Destorying Vulkan Devices");
+    DDEBUG("Destorying Vulkan Devices");
     vulkan_device_destroy(&context);
 
     DDEBUG("Destroying Vulkan Surface");

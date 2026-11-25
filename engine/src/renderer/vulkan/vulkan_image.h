@@ -2,7 +2,8 @@
 
 #include "vulkan_types.inl"
 
-void vulkan_image_create(vulkan_context* context, 
+void vulkan_image_create(
+    vulkan_context* context,
     VkImageType image_type,
     uint32_t width,
     uint32_t height,
@@ -10,11 +11,12 @@ void vulkan_image_create(vulkan_context* context,
     VkImageTiling tiling,
     VkImageUsageFlags usage,
     VkMemoryPropertyFlags memory_flags,
-    int create_view,    
+    bool create_view,
     VkImageAspectFlags view_aspect_flags,
     vulkan_image* out_image);
 
-void vulkan_image_view_create(vulkan_context* context,
+void vulkan_image_view_create(
+    vulkan_context* context,
     VkFormat format,
     vulkan_image* image,
     VkImageAspectFlags aspect_flags);
