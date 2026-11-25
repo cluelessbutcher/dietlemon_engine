@@ -4,6 +4,7 @@
 #include "vulkan_types.inl"
 #include "vulkan_platform.h"
 #include "vulkan_device.h"
+#include "vulkan_swapchain.h"
 
 #include "core/dstring.h"
 #include "containers/darray.h"
@@ -41,7 +42,10 @@ VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_callback(
     return VK_FALSE;
 }
 
+int32_t find_memory_index(uint32_t type_filter, uint32_t property_flags);
+
 bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* application_name, struct platform_state* plat_state) {
+    context.find_memory_index = find_memory_index;
     context.allocator = 0;
 
     VkApplicationInfo app_info = {VK_STRUCTURE_TYPE_APPLICATION_INFO};
@@ -208,6 +212,8 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
         return false;
     }
 
+    vulkan_swapchain_create(&context, context.framebuffer_width, context.framebuffer_height, &context.swapchain);
+
     darray_destroy(required_extensions);
 
     if (required_validation_layer_names) {
@@ -220,6 +226,16 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
 }
 
 void vulkan_renderer_backend_shutdown(renderer_backend* backend) {
+    vulkan_swapchain_destroy(&context, &context.swapchain);
+    DDBUG("Destorying Vulkan Devices");
+    vulkan_device_destroy(&context);
+
+    DDEBUG("Destroying Vulkan Surface");
+    if (context.surface) {
+        vkDestroySurfaceKHR(context.instance, context.surface, context.allocator);
+        context.surface = 0;
+    }
+
 #if defined(_DEBUG)
     if (context.debug_messenger && context.instance) {
         PFN_vkDestroyDebugUtilsMessengerEXT destroy_func =
@@ -256,4 +272,17 @@ bool vulkan_renderer_backend_begin_frame(renderer_backend* backend, float delta_
 
 bool vulkan_renderer_backend_end_frame(renderer_backend* backend, float delta_time) {
     return true;
+}
+
+int32_t find_memory_index(uint32_t type_filter, uint32_t property_flags) {
+    VkPhysicalDeviceMemoryProperties memory_properties;
+    vkGetPhysicalDeviceMemoryProperties(context.device.physical_device, &memory_properties);
+    for (uint32_t i = 0; i < memory_properties.memoryTypeCount; ++i) {
+        if (type_filter & (1 << i) && (memory_properties.memoryTypes[i].propertyFlags & property_flags) == property_flags) {
+            return i;
+        }
+    }
+
+    DWARN("Unable to find suitable memory type");
+    return -1;
 }

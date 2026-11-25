@@ -66,3 +66,5 @@ STATIC_ASSERT(sizeof(double) == 8, "Expected double to be 8 bytes");
 #define DAPI
 #endif
 #endif
+
+#define DCLAMP(value, min, max) (value <= min) ? min : (value >= masx) ? max : value;
