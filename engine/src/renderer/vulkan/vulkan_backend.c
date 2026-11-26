@@ -1,10 +1,10 @@
-
 #include "vulkan_backend.h"
 
 #include "vulkan_types.inl"
 #include "vulkan_platform.h"
 #include "vulkan_device.h"
 #include "vulkan_swapchain.h"
+#include "vulkan_renderpass.h"
 
 #include "core/dstring.h"
 #include "containers/darray.h"
@@ -213,6 +213,7 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
     }
 
     vulkan_swapchain_create(&context, context.framebuffer_width, context.framebuffer_height, &context.swapchain);
+    vulkan_renderpass_create(&context, &context.main_renderpass, 0, 0, context.framebuffer_width, context.framebuffer_height, 0.0f, 0.0f, 0.2f, 1.0f, 1.0f, 0);
 
     darray_destroy(required_extensions);
 
@@ -226,6 +227,7 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
 }
 
 void vulkan_renderer_backend_shutdown(renderer_backend* backend) {
+    vulkan_renderpass_destroy(&context, &context.main_renderpass);
     vulkan_swapchain_destroy(&context, &context.swapchain);
     DDEBUG("Destorying Vulkan Devices");
     vulkan_device_destroy(&context);
