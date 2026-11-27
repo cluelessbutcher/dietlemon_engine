@@ -5,11 +5,13 @@
 #include "vulkan_device.h"
 #include "vulkan_swapchain.h"
 #include "vulkan_renderpass.h"
+#include "vulkan_command_buffer.h"
 
 #include "core/dstring.h"
 #include "containers/darray.h"
 #include "platform/platform.h"
 #include "core/logger.h"
+#include "core/dmemory.h"
 
 #include <string.h>
 
@@ -43,6 +45,8 @@ VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_callback(
 }
 
 int32_t find_memory_index(uint32_t type_filter, uint32_t property_flags);
+
+void create_command_buffer(renderer_backend* backend);
 
 bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* application_name, struct platform_state* plat_state) {
     context.find_memory_index = find_memory_index;
@@ -215,6 +219,8 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
     vulkan_swapchain_create(&context, context.framebuffer_width, context.framebuffer_height, &context.swapchain);
     vulkan_renderpass_create(&context, &context.main_renderpass, 0, 0, context.framebuffer_width, context.framebuffer_height, 0.0f, 0.0f, 0.2f, 1.0f, 1.0f, 0);
 
+    create_command_buffer(backend);
+
     darray_destroy(required_extensions);
 
     if (required_validation_layer_names) {
@@ -227,6 +233,15 @@ bool vulkan_renderer_backend_initialize(renderer_backend* backend, const char* a
 }
 
 void vulkan_renderer_backend_shutdown(renderer_backend* backend) {
+    for (uint32_t i = 0; i < context.swapchain.image_count; ++i) {
+        if (context.graphics_command_buffers[i].handle) {
+            vulkan_command_buffer_free(&context, context.device.graphics_command_pool, &context.graphics_command_buffers[i]);
+            context.graphics_command_buffers[i].handle = 0;
+        }
+    }
+    darray_destroy(context.graphics_command_buffers);
+    context.graphics_command_buffers = 0;
+
     vulkan_renderpass_destroy(&context, &context.main_renderpass);
     vulkan_swapchain_destroy(&context, &context.swapchain);
     DDEBUG("Destorying Vulkan Devices");
@@ -287,4 +302,22 @@ int32_t find_memory_index(uint32_t type_filter, uint32_t property_flags) {
 
     DWARN("Unable to find suitable memory type");
     return -1;
+}
+
+void create_command_buffer(renderer_backend* backend) {
+    if (!context.graphics_command_buffers) {
+        context.graphics_command_buffers = darray_reserve(vulkan_command_buffer, context.swapchain.image_count);
+        for (uint32_t i = 0; i < context.swapchain.image_count; ++i) {
+            memset(&context.graphics_command_buffers[i], 0, sizeof(vulkan_command_buffer));
+        }
+    }
+
+    for (uint32_t i = 0; i < context.swapchain.image_count; ++i) {
+        if (context.graphics_command_buffers[i].handle) {
+            vulkan_command_buffer_free(&context, context.device.graphics_command_pool, &context.graphics_command_buffers[i]);
+        }
+        memset(&context.graphics_command_buffers[i], 0, sizeof(vulkan_command_buffer));
+        vulkan_command_buffer_allocate(&context, context.device.graphics_command_pool, true, &context.graphics_command_buffers[i]);
+    } 
+    DDEBUG("Vulkan command buffers created");
 }
